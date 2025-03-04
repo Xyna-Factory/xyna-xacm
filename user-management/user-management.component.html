@@ -1,87 +1,89 @@
 <xc-master-detail [xc-master-detail-opened]="!!currentObject" xc-master-detail-side-area-size="golden" xc-i18n-context="xmcp.xacm.user">
-    <xc-panel master>
-        <header>
-            <h1 class="items-left" xc-i18n>header-users</h1>
-            <div class="items-right">
-                <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
-                <xc-icon-button (click)="refresh()" xc-i18n xc-icon-name="reload" xc-tooltip="tooltip-refresh"></xc-icon-button>
-                <xc-icon-button (click)="create(null)" xc-i18n xc-icon xc-icon-name="add" xc-tooltip="tooltip-add"></xc-icon-button>
-            </div>
-        </header>
-        <section class="stretch scroll">
-            <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter
-                xc-table-allowselect xc-table-lazyupdate>
-            </xc-table>
-        </section>
-        <footer>
-        </footer>
+  <xc-panel master>
+    <header>
+      <h1 class="items-left" xc-i18n>header-users</h1>
+      <div class="items-right">
+        <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
+        <xc-icon-button (click)="refresh()" xc-i18n xc-icon-name="reload" xc-tooltip="tooltip-refresh"></xc-icon-button>
+        <xc-icon-button (click)="create(null)" xc-i18n xc-icon xc-icon-name="add" xc-tooltip="tooltip-add"></xc-icon-button>
+      </div>
+    </header>
+    <section class="stretch scroll">
+      <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter
+        xc-table-allowselect xc-table-lazyupdate>
+      </xc-table>
+    </section>
+    <footer>
+    </footer>
+  </xc-panel>
+
+  @if (!!currentObject) {
+    <xc-panel detail #detailsForm xc-form>
+      <header>
+        <h2 class="items-left" xc-i18n>header-user-details</h2>
+        <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel" xc-i18n></xc-icon-button>
+      </header>
+      <section class="stretch scroll">
+        <div class="username-container">
+          <span attr.aria-label="{{'aria-user-name' | xcI18n}}" class="user-name">{{currentObject.user}}</span>
+        </div>
+        <div class="items-row">
+          <xc-form-autocomplete
+            label="label-role"
+            [xc-form-autocomplete-options]="roleDataWrapper.values"
+            [(xc-form-autocomplete-option)]="roleDataWrapper.value"
+            placeholder="placeholder-choose"
+            xc-form-field-suffix="clear"
+            xc-form-autocomplete-fulltextsearch
+            xc-i18n
+            xc-form-validator-required
+          ></xc-form-autocomplete>
+          <xc-checkbox label="label-locked" [(checked)]="currentObject.locked" xc-i18n></xc-checkbox>
+        </div>
+        <!-- PASSWORD SUB PANEL -->
+        <xc-panel>
+          <header>
+            <h3 class="items-left" xc-i18n>header-new-password</h3>
+          </header>
+          <section class="pw-form">
+            <xc-form-input
+              #pwInput
+              type="password"
+              xc-form-field-suffix="password"
+              label="header-new-password"
+              [(value)]="pw"
+              xc-i18n
+            ></xc-form-input>
+            <xc-form-input
+              #pwrInput
+              [ngStyle]="{display: pwInput.value ? 'block' : 'none'}"
+              type="password"
+              xc-form-field-suffix="password"
+              label="label-password-confirmation"
+              [(value)]="pwr"
+              xc-i18n
+            ></xc-form-input>
+          </section>
+          <footer>
+            @if (!passwordsMatch) {
+              <span class="passwords-match-warning" xc-i18n>span-passwords-do-not-match</span>
+            }
+          </footer>
+        </xc-panel>
+        <!-- END PASSWORD SUB PANEL -->
+        <!-- AUTHENTICATION SUB PANEL -->
+        <xc-panel>
+          <header>
+            <h3 class="items-left" xc-i18n>header-domain</h3>
+          </header>
+          <xc-rich-list [xc-rich-list-items]="authenticationRichListItems"></xc-rich-list>
+        </xc-panel>
+        <!-- END AUTHENTICATION SUB PANEL -->
+      </section>
+      <footer>
+        <xc-button class="items-left" (click)="closeDetails()" xc-i18n>button-cancel</xc-button>
+        <xc-button class="items-right" (click)="save()" [disabled]="!passwordsMatch || invalid" color="primary" xc-i18n>button-apply</xc-button>
+      </footer>
     </xc-panel>
-
-    <xc-panel detail *ngIf="!!currentObject" #detailsForm xc-form>
-        <header>
-            <h2 class="items-left" xc-i18n>header-user-details</h2>
-            <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel" xc-i18n></xc-icon-button>
-        </header>
-        <section class="stretch scroll">
-                <div class="username-container">
-                    <span attr.aria-label="{{'aria-user-name' | xcI18n}}" class="user-name">{{currentObject.user}}</span>
-                </div>
-            <div class="items-row">
-                <xc-form-autocomplete
-                    label="label-role"
-                    [xc-form-autocomplete-options]="roleDataWrapper.values"
-                    [(xc-form-autocomplete-option)]="roleDataWrapper.value"
-                    placeholder="placeholder-choose"
-                    xc-form-field-suffix="clear"
-                    xc-form-autocomplete-fulltextsearch
-                    xc-i18n
-                    xc-form-validator-required
-                ></xc-form-autocomplete>
-                <xc-checkbox label="label-locked" [(checked)]="currentObject.locked" xc-i18n></xc-checkbox>
-            </div>
-            <!-- PASSWORD SUB PANEL -->
-            <xc-panel>
-                <header>
-                    <h3 class="items-left" xc-i18n>header-new-password</h3>
-                </header>
-                <section class="pw-form">
-                    <xc-form-input
-                        #pwInput
-                        type="password"
-                        xc-form-field-suffix="password"
-                        label="header-new-password"
-                        [(value)]="pw"
-                        xc-i18n
-                    ></xc-form-input>
-                    <xc-form-input
-                        #pwrInput
-                        [ngStyle]="{display: pwInput.value ? 'block' : 'none'}"
-                        type="password"
-                        xc-form-field-suffix="password"
-                        label="label-password-confirmation"
-                        [(value)]="pwr"
-                        xc-i18n
-                    ></xc-form-input>
-                </section>
-                <footer>
-                    <span class="passwords-match-warning" *ngIf="!passwordsMatch" xc-i18n>span-passwords-do-not-match</span>
-                </footer>
-            </xc-panel>
-            <!-- END PASSWORD SUB PANEL -->
-
-            <!-- AUTHENTICATION SUB PANEL -->
-            <xc-panel>
-                <header>
-                    <h3 class="items-left" xc-i18n>header-domain</h3>
-                </header>
-                <xc-rich-list [xc-rich-list-items]="authenticationRichListItems"></xc-rich-list>
-            </xc-panel>
-            <!-- END AUTHENTICATION SUB PANEL -->
-
-        </section>
-        <footer>
-            <xc-button class="items-left" (click)="closeDetails()" xc-i18n>button-cancel</xc-button>
-            <xc-button class="items-right" (click)="save()" [disabled]="!passwordsMatch || invalid" color="primary" xc-i18n>button-apply</xc-button>
-        </footer>
-    </xc-panel>
+  }
 </xc-master-detail>

@@ -40,7 +40,8 @@ export interface EditRightComponentData {
 
 @Component({
     templateUrl: './edit-right.component.html',
-    styleUrls: ['./edit-right.component.scss']
+    styleUrls: ['./edit-right.component.scss'],
+    standalone: false
 })
 export class EditRightComponent extends XcDialogComponent<void, EditRightComponentData> {
 

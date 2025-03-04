@@ -1,49 +1,59 @@
 <xc-dialog-wrapper xc-form xc-i18n-context="acm.add-new-right">
-    <ng-container header><span xc-i18n>header</span></ng-container>
-    <section content>
+  <ng-container header><span xc-i18n>header</span></ng-container>
+  <section content>
 
-        <div class="items-row">
-            <xc-form-input
-                label="label-right-name"
-                [(value)]="right.rightName"
-                [xc-form-validator-custom]="rightNameValidatorFN"
-                xc-i18n
-                xc-form-validator-required
-            ></xc-form-input>
-        </div>
+    <div class="items-row">
+      <xc-form-input
+        label="label-right-name"
+        [(value)]="right.rightName"
+        [xc-form-validator-custom]="rightNameValidatorFN"
+        xc-i18n
+        xc-form-validator-required
+      ></xc-form-input>
+    </div>
 
-        <div class="items-row parameter-help-row">
-            <xc-button (click)="showNameHelp = !showNameHelp" *ngIf="!showNameHelp" xc-i18n>button-show-name-help</xc-button>
-            <div *ngIf="showNameHelp">{{nameHelp}}</div>
-        </div>
+    <div class="items-row parameter-help-row">
+      @if (!showNameHelp) {
+        <xc-button (click)="showNameHelp = !showNameHelp" xc-i18n>button-show-name-help</xc-button>
+      }
+      @if (showNameHelp) {
+        <div>{{nameHelp}}</div>
+      }
+    </div>
 
-        <div class="items-row">
-            <!-- <xc-form-input xc-i18n label="label-parameters" [(value)]="right.parameterStr"></xc-form-input> -->
-            <xc-panel>
-                <header>
-                    <h3 class="items-left" xc-i18n>header-parameter-definition</h3>
-                    <div class="items-right">
-                        <xc-icon-button xc-icon-name="add" (click)="addParameter()"></xc-icon-button>
-                    </div>
-                </header>
-                <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
-                <footer *ngIf="numberOfParameters === 0" xc-i18n style="padding-left: 10px;">footer-0-parameters</footer>
-            </xc-panel>
-        </div>
+    <div class="items-row">
+      <!-- <xc-form-input xc-i18n label="label-parameters" [(value)]="right.parameterStr"></xc-form-input> -->
+      <xc-panel>
+        <header>
+          <h3 class="items-left" xc-i18n>header-parameter-definition</h3>
+          <div class="items-right">
+            <xc-icon-button xc-icon-name="add" (click)="addParameter()"></xc-icon-button>
+          </div>
+        </header>
+        <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
+        @if (numberOfParameters === 0) {
+          <footer xc-i18n style="padding-left: 10px;">footer-0-parameters</footer>
+        }
+      </xc-panel>
+    </div>
 
-        <div class="items-row parameter-help-row">
-            <xc-button (click)="showParameterHelp = !showParameterHelp" *ngIf="!showParameterHelp" xc-i18n>button-show-parameter-help</xc-button>
-            <div *ngIf="showParameterHelp">{{parameterHelp}}</div>
-        </div>
+    <div class="items-row parameter-help-row">
+      @if (!showParameterHelp) {
+        <xc-button (click)="showParameterHelp = !showParameterHelp" xc-i18n>button-show-parameter-help</xc-button>
+      }
+      @if (showParameterHelp) {
+        <div>{{parameterHelp}}</div>
+      }
+    </div>
 
-        <div class="items-row">
-            <xc-form-textarea xc-i18n label="label-documentation" xc-form-textarea-lines="12" [(value)]="right.documentation"></xc-form-textarea>
-        </div>
+    <div class="items-row">
+      <xc-form-textarea xc-i18n label="label-documentation" xc-form-textarea-lines="12" [(value)]="right.documentation"></xc-form-textarea>
+    </div>
 
-    </section>
+  </section>
 
-    <ng-container footer>
-        <xc-button (click)="dismiss(null)" xc-i18n>button-cancel</xc-button>
-        <xc-button (click)="apply()" color="primary" [disabled]="invalid" xc-i18n>button-add</xc-button>
-    </ng-container>
+  <ng-container footer>
+    <xc-button (click)="dismiss(null)" xc-i18n>button-cancel</xc-button>
+    <xc-button (click)="apply()" color="primary" [disabled]="invalid" xc-i18n>button-add</xc-button>
+  </ng-container>
 </xc-dialog-wrapper>

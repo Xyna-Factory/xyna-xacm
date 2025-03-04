@@ -1,51 +1,51 @@
 <xc-master-detail [xc-master-detail-opened]="!!currentObject" xc-master-detail-side-area-size="golden" xc-i18n-context="xmcp.xacm.rights">
-    <xc-panel master>
-        <header>
-            <h1 class="items-left" xc-i18n>header</h1>
+  <xc-panel master>
+    <header>
+      <h1 class="items-left" xc-i18n>header</h1>
+      <div class="items-right">
+        <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
+        <xc-icon-button (click)="refresh()" xc-icon-name="reload" xc-tooltip="tooltip-refresh" xc-i18n></xc-icon-button>
+        <xc-icon-button (click)="create(null)" xc-icon xc-icon-name="add" xc-tooltip="tooltip-add" xc-i18n></xc-icon-button>
+      </div>
+    </header>
+    <section class="stretch scroll">
+      <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter xc-table-allowselect xc-table-lazyupdate>
+      </xc-table>
+    </section>
+    <footer>
+    </footer>
+  </xc-panel>
+
+  @if (!!currentObject) {
+    <xc-panel detail>
+      <header>
+        <h2 class="items-left" xc-i18n>header-right-details</h2>
+        <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel"></xc-icon-button>
+      </header>
+      <section class="stretch scroll">
+        <div class="rightname-container">
+          <span attr.aria-label="{{'aria-right' | xcI18n}}" class="right-name">{{currentObject.rightName}}</span>
+        </div>
+        <xc-panel>
+          <header>
+            <h3 class="items-left" xc-i18n>header-parameter-definition</h3>
             <div class="items-right">
-                <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
-                <xc-icon-button (click)="refresh()" xc-icon-name="reload" xc-tooltip="tooltip-refresh" xc-i18n></xc-icon-button>
-                <xc-icon-button (click)="create(null)" xc-icon xc-icon-name="add" xc-tooltip="tooltip-add" xc-i18n></xc-icon-button>
+              <!-- <xc-icon-button xc-icon-name="add" (click)="addParameter()"></xc-icon-button> -->
             </div>
-        </header>
-        <section class="stretch scroll">
-            <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter xc-table-allowselect xc-table-lazyupdate>
-            </xc-table>
-        </section>
-        <footer>
-        </footer>
+          </header>
+          <xc-rich-list xc-i18n-context="parameter-richlist-item" [xc-rich-list-items]="parameterRichlistItems"></xc-rich-list>
+          @if (numberOfParameters === 0) {
+            <footer xc-i18n style="padding-left: 10px;">footer-0-parameters</footer>
+          }
+        </xc-panel>
+        <div class="items-row">
+          <xc-form-textarea xc-i18n label="label-documentation" xc-form-textarea-lines="20" [(value)]="currentObject.documentation"></xc-form-textarea>
+        </div>
+      </section>
+      <footer>
+        <xc-button class="items-left" (click)="closeDetails()" xc-i18n>button-cancel</xc-button>
+        <xc-button class="items-right" (click)="save()" color="primary" xc-i18n>button-apply</xc-button>
+      </footer>
     </xc-panel>
-
-    <xc-panel detail *ngIf="!!currentObject">
-        <header>
-            <h2 class="items-left" xc-i18n>header-right-details</h2>
-            <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel"></xc-icon-button>
-        </header>
-        <section class="stretch scroll">
-
-            <div class="rightname-container">
-                <span attr.aria-label="{{'aria-right' | xcI18n}}" class="right-name">{{currentObject.rightName}}</span>
-            </div>
-
-            <xc-panel>
-                <header>
-                    <h3 class="items-left" xc-i18n>header-parameter-definition</h3>
-                    <div class="items-right">
-                        <!-- <xc-icon-button xc-icon-name="add" (click)="addParameter()"></xc-icon-button> -->
-                    </div>
-                </header>
-                <xc-rich-list xc-i18n-context="parameter-richlist-item" [xc-rich-list-items]="parameterRichlistItems"></xc-rich-list>
-                <footer *ngIf="numberOfParameters === 0" xc-i18n style="padding-left: 10px;">footer-0-parameters</footer>
-            </xc-panel>
-
-            <div class="items-row">
-                <xc-form-textarea xc-i18n label="label-documentation" xc-form-textarea-lines="20" [(value)]="currentObject.documentation"></xc-form-textarea>
-            </div>
-
-        </section>
-        <footer>
-            <xc-button class="items-left" (click)="closeDetails()" xc-i18n>button-cancel</xc-button>
-            <xc-button class="items-right" (click)="save()" color="primary" xc-i18n>button-apply</xc-button>
-        </footer>
-    </xc-panel>
+  }
 </xc-master-detail>

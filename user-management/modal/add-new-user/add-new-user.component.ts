@@ -40,7 +40,8 @@ export interface AddNewUserComponentData {
 
 @Component({
     templateUrl: './add-new-user.component.html',
-    styleUrls: ['./add-new-user.component.scss']
+    styleUrls: ['./add-new-user.component.scss'],
+    standalone: false
 })
 export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, AddNewUserComponentData> {
 

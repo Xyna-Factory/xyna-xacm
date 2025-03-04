@@ -23,8 +23,8 @@ import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogService, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
-import { ACMApiService } from '../acm-api.service';
 
+import { ACMApiService } from '../acm-api.service';
 import { extractError, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
 import { ACMSettingsService } from '../acm-settings.service';
@@ -42,7 +42,8 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
 @Component({
     selector: 'user-management',
     templateUrl: './user-management.component.html',
-    styleUrls: ['./user-management.component.scss']
+    styleUrls: ['./user-management.component.scss'],
+    standalone: false
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 
@@ -96,7 +97,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
 
         this.tableDataSource.output = XoUserArray;
         this.tableDataSource.filterEnums.set(XoUser.getAccessorMap().locked, of(<XcOptionItem[]>[
-            {name: '', value: ''}, {name: 'true', value: 'true'}, {name: 'false', value: 'false'}
+            { name: '', value: '' }, { name: 'true', value: 'true' }, { name: 'false', value: 'false' }
         ]));
     }
 
@@ -156,7 +157,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
                 }
                 this.resetPasswordForm();
             },
-            error => this.dialogService.error(extractError(error)));
+                error => this.dialogService.error(extractError(error)));
         }
     }
 
@@ -166,7 +167,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         object.name = user.user;
 
         const questionTitle = this.i18nService.translate('xmcp.xacm.user.question');
-        const question = this.i18nService.translate('xmcp.xacm.user.delete', {key: '%name%', value: user.user});
+        const question = this.i18nService.translate('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
 
         const sendRequest = () => {
             this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
@@ -194,12 +195,12 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         this.tableDataSource.resetFilters();
     }
 
-    private updateUser(request: XoUpdateUserRequest): Observable<{success: boolean}> {
-        return this.httpClient.post('xacm/updateuser', request.encode()) as Observable<{success: boolean}>;
+    private updateUser(request: XoUpdateUserRequest): Observable<{ success: boolean }> {
+        return this.httpClient.post('xacm/updateuser', request.encode()) as Observable<{ success: boolean }>;
     }
 
-    private createUser(request: XoCreateUserRequest): Observable<{success: boolean}> {
-        return this.httpClient.post('xacm/createuser', request.encode()) as Observable<{success: boolean}>;
+    private createUser(request: XoCreateUserRequest): Observable<{ success: boolean }> {
+        return this.httpClient.post('xacm/createuser', request.encode()) as Observable<{ success: boolean }>;
     }
 
     private operationFailed() {

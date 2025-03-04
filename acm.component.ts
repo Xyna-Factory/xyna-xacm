@@ -28,7 +28,8 @@ import { acm_translations_en_US } from './locale/acm-translations.en-US';
 @Component({
     selector: 'acm',
     templateUrl: './acm.component.html',
-    styleUrls: ['./acm.component.scss']
+    styleUrls: ['./acm.component.scss'],
+    standalone: false
 })
 export class AcmComponent extends RouteComponent {
 

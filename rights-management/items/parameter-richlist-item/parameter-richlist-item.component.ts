@@ -27,7 +27,7 @@ import { RightParameterType, RightParameterValueError, XoRightParameter, XoRight
 
 
 function ParameterValueValidator(errorMessage: string, parameterDataGetter: () => ParameterRichlistItemData, i18n: I18nService): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
         const para = parameterDataGetter().parameter;
         const grantMode = parameterDataGetter().grantMode;
         const value = (<string>control.value);
@@ -39,7 +39,7 @@ function ParameterValueValidator(errorMessage: string, parameterDataGetter: () =
             allowed = para.isDefinitionValid(value);
         }
 
-        return !allowed.valid ? { 'message' : { value: control.value, message: allowed.translate(i18n)}} : null;
+        return !allowed.valid ? { 'message': { value: control.value, message: allowed.translate(i18n) } } : null;
     };
 }
 
@@ -59,11 +59,12 @@ export interface ParameterRichlistItemData {
 
 @Component({
     templateUrl: './parameter-richlist-item.component.html',
-    styleUrls: ['./parameter-richlist-item.component.scss']
+    styleUrls: ['./parameter-richlist-item.component.scss'],
+    standalone: false
 })
 export class ParameterRichlistItemComponent extends XcRichListItemComponent<void, ParameterRichlistItemData> implements OnDestroy {
 
-    @ViewChild('parameterValue', {read: XcFormInputComponent, static: false})
+    @ViewChild('parameterValue', { read: XcFormInputComponent, static: false })
     set parameterValueInput(value: XcFormInputComponent) {
         if (value) {
             const dataGetter = () => this.injectedData;
@@ -97,9 +98,9 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
             () => this.injectedData.parameter.type,
             value => this.injectedData.parameter.type = value,
             [
-                {name: 'Options', value: RightParameterType.OPTIONS},
-                {name: 'RegExp', value: RightParameterType.REGEXP},
-                {name: 'Xyna', value: RightParameterType.XYNA}
+                { name: 'Options', value: RightParameterType.OPTIONS },
+                { name: 'RegExp', value: RightParameterType.REGEXP },
+                { name: 'Xyna', value: RightParameterType.XYNA }
             ]
         );
 

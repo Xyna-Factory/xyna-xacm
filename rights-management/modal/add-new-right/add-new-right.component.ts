@@ -37,7 +37,8 @@ export interface AddNewRightComponentData {
 
 @Component({
     templateUrl: './add-new-right.component.html',
-    styleUrls: ['./add-new-right.component.scss']
+    styleUrls: ['./add-new-right.component.scss'],
+    standalone: false
 })
 export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRightComponentData> {
 

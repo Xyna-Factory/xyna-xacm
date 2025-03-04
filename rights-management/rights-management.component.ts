@@ -36,7 +36,8 @@ import { AddNewRightComponent, AddNewRightComponentData } from './modal/add-new-
 @Component({
     selector: 'rights-management',
     templateUrl: './rights-management.component.html',
-    styleUrls: ['./rights-management.component.scss']
+    styleUrls: ['./rights-management.component.scss'],
+    standalone: false
 })
 export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 

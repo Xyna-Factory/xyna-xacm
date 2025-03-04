@@ -1,57 +1,64 @@
 <div class="items-row grid-12">
-    <!-- TYPE DROPDOWN -->
-    <xc-form-autocomplete
-        label="label-type"
-        class="col-5"
+  <!-- TYPE DROPDOWN -->
+  <xc-form-autocomplete
+    label="label-type"
+    class="col-5"
+    xc-form-autocomplete-asdropdown
+    [(xc-form-autocomplete-option)]="parameterTypeDataWrapper.value"
+    [xc-form-autocomplete-options]="parameterTypeDataWrapper.values"
+    [readonly]="grantMode || injectedData.readonly"
+    xc-form-field-suffix="clear"
+    xc-form-autocomplete-fulltextsearch
+    xc-i18n
+  ></xc-form-autocomplete>
+
+  <!-- VALUE grantMode -->
+  @if (grantMode) {
+    @if (optionsTypeSelected) {
+      <xc-form-autocomplete
+        label="label-value"
+        class="col-7"
         xc-form-autocomplete-asdropdown
-        [(xc-form-autocomplete-option)]="parameterTypeDataWrapper.value"
-        [xc-form-autocomplete-options]="parameterTypeDataWrapper.values"
-        [readonly]="grantMode || injectedData.readonly"
+        [(xc-form-autocomplete-option)]="optionsDataWrapper.value"
+        [xc-form-autocomplete-options]="optionsDataWrapper.values"
+        [readonly]="injectedData.readonly"
         xc-form-field-suffix="clear"
         xc-form-autocomplete-fulltextsearch
         xc-i18n
-    ></xc-form-autocomplete>
+        xc-form-validator-required
+      ></xc-form-autocomplete>
+    }
+    @if (!optionsTypeSelected) {
+      <xc-form-input
+        #parameterValue
+        label="label-value"
+        class="col-7"
+        [(value)]="injectedData.parameter.value"
+        [readonly]="injectedData.readonly"
+        xc-i18n
+        xc-form-validator-required
+      ></xc-form-input>
+    }
+  }
 
-    <!-- VALUE grantMode -->
-    <ng-container *ngIf="grantMode">
-        <xc-form-autocomplete
-            *ngIf="optionsTypeSelected"
-            label="label-value"
-            class="col-7"
-            xc-form-autocomplete-asdropdown
-            [(xc-form-autocomplete-option)]="optionsDataWrapper.value"
-            [xc-form-autocomplete-options]="optionsDataWrapper.values"
-            [readonly]="injectedData.readonly"
-            xc-form-field-suffix="clear"
-            xc-form-autocomplete-fulltextsearch
-            xc-i18n
-            xc-form-validator-required
-        ></xc-form-autocomplete>
-        <xc-form-input
-            *ngIf="!optionsTypeSelected"
-            #parameterValue
-            label="label-value"
-            class="col-7"
-            [(value)]="injectedData.parameter.value"
-            [readonly]="injectedData.readonly"
-            xc-i18n
-            xc-form-validator-required
-        ></xc-form-input>
-    </ng-container>
-
-    <!-- DEFINITION !grantMode -->
-    <ng-container *ngIf="!grantMode">
-        <xc-form-input
-            *ngIf="!xynaTypeSelected"
-            #parameterValue
-            label="label-definition"
-            class="col-7"
-            [(value)]="injectedData.parameter.value"
-            [readonly]="injectedData.readonly"
-            xc-i18n
-            xc-form-validator-required
-        ></xc-form-input>
-        <div class="col-7" *ngIf="xynaTypeSelected"></div>
-        <xc-icon-button xc-icon-name="delete" *ngIf="!injectedData.readonly" (click)="delete()"></xc-icon-button>
-    </ng-container>
+  <!-- DEFINITION !grantMode -->
+  @if (!grantMode) {
+    @if (!xynaTypeSelected) {
+      <xc-form-input
+        #parameterValue
+        label="label-definition"
+        class="col-7"
+        [(value)]="injectedData.parameter.value"
+        [readonly]="injectedData.readonly"
+        xc-i18n
+        xc-form-validator-required
+      ></xc-form-input>
+    }
+    @if (xynaTypeSelected) {
+      <div class="col-7"></div>
+    }
+    @if (!injectedData.readonly) {
+      <xc-icon-button xc-icon-name="delete" (click)="delete()"></xc-icon-button>
+    }
+  }
 </div>

@@ -1,61 +1,63 @@
 <xc-master-detail [xc-master-detail-opened]="!!role" xc-master-detail-side-area-size="half" xc-i18n-context="xmcp.xacm.roles">
-    <xc-panel master>
-        <header>
-            <h1 class="items-left" xc-i18n>header-roles
-            </h1>
-            <div class="items-right">
-                <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
-                <xc-icon-button (click)="refresh()" xc-icon-name="reload" xc-tooltip="tooltip-refresh" xc-i18n></xc-icon-button>
-                <xc-icon-button (click)="create(null)" xc-icon xc-icon-name="add" xc-tooltip="tooltip-add" xc-i18n></xc-icon-button>
-            </div>
-        </header>
-        <section class="stretch scroll">
-            <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter xc-table-allowselect 
-                xc-table-lazyupdate>
-            </xc-table>
-        </section>
-        <footer>
-        </footer>
-    </xc-panel>
+  <xc-panel master>
+    <header>
+      <h1 class="items-left" xc-i18n>header-roles
+      </h1>
+      <div class="items-right">
+        <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
+        <xc-icon-button (click)="refresh()" xc-icon-name="reload" xc-tooltip="tooltip-refresh" xc-i18n></xc-icon-button>
+        <xc-icon-button (click)="create(null)" xc-icon xc-icon-name="add" xc-tooltip="tooltip-add" xc-i18n></xc-icon-button>
+      </div>
+    </header>
+    <section class="stretch scroll">
+      <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter xc-table-allowselect
+        xc-table-lazyupdate>
+      </xc-table>
+    </section>
+    <footer>
+    </footer>
+  </xc-panel>
 
-    <xc-panel detail *ngIf="!!role">
-        <header>
-            <h2 class="items-left" xc-i18n>header-role-details</h2>
-            <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel"
-                xc-i18n></xc-icon-button>
-        </header>
-        <section class="stretch scroll">
-            <div class="rolename-container">
-                <span attr.aria-label="{{'aria-role-name' | xcI18n}}" class="role-name">{{role.roleName}}</span>
+  @if (!!role) {
+    <xc-panel detail>
+      <header>
+        <h2 class="items-left" xc-i18n>header-role-details</h2>
+        <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel"
+        xc-i18n></xc-icon-button>
+      </header>
+      <section class="stretch scroll">
+        <div class="rolename-container">
+          <span attr.aria-label="{{'aria-role-name' | xcI18n}}" class="role-name">{{role.roleName}}</span>
+        </div>
+        <div class="items-row">
+          <xc-form-textarea xc-i18n label="label-documentation" [(value)]="role.description"></xc-form-textarea>
+        </div>
+        <xc-panel>
+          <header>
+            <h3 class="items-left" xc-i18n>header-granted-rights</h3>
+            <div class="items-right items-row">
+              <xc-icon-button (click)="updateRights(null)" xc-icon xc-icon-name="add" xc-tooltip="tooltip-grant-new-right" xc-i18n></xc-icon-button>
             </div>
-            <div class="items-row">
-                <xc-form-textarea xc-i18n label="label-documentation" [(value)]="role.description"></xc-form-textarea>
+          </header>
+          <xc-table
+            class="acm-panel-conform"
+            xc-table-allowselect
+            xc-table-allowfilter
+            xc-table-allowsort
+            xc-table-multiselect
+            [xc-table-datasource]="rightsLocalTableDataSource"
+          ></xc-table>
+          <footer>
+            <div class="items-left items-row">
+              <xc-button (click)="revokeSelectedRights()" [disabled]="rightsLocalTableDataSource.selectionModel.isEmpty()" xc-i18n>button-revoke-rights</xc-button>
             </div>
-            <xc-panel>
-                <header>
-                    <h3 class="items-left" xc-i18n>header-granted-rights</h3>
-                    <div class="items-right items-row">
-                        <xc-icon-button (click)="updateRights(null)" xc-icon xc-icon-name="add" xc-tooltip="tooltip-grant-new-right" xc-i18n></xc-icon-button>
-                    </div>
-                </header>
-                <xc-table 
-                    class="acm-panel-conform" 
-                    xc-table-allowselect 
-                    xc-table-allowfilter 
-                    xc-table-allowsort
-                    xc-table-multiselect 
-                    [xc-table-datasource]="rightsLocalTableDataSource"
-                ></xc-table>
-                <footer>
-                    <div class="items-left items-row">
-                        <xc-button (click)="revokeSelectedRights()" [disabled]="rightsLocalTableDataSource.selectionModel.isEmpty()" xc-i18n>button-revoke-rights</xc-button>
-                    </div>
-                </footer>
-            </xc-panel>
-        </section>
-        <footer>
-            <xc-button class="items-left" (click)="closeDetails()" xc-i18n>button-cancel</xc-button>
-            <xc-button class="items-right" (click)="save()" color="primary" xc-i18n>button-apply</xc-button>
-        </footer>
+          </footer>
+        </xc-panel>
+      </section>
+      <footer>
+        <xc-button class="items-left" (click)="closeDetails()" xc-i18n>button-cancel</xc-button>
+        <xc-button class="items-right" (click)="save()" color="primary" xc-i18n>button-apply</xc-button>
+      </footer>
     </xc-panel>
+  }
 </xc-master-detail>

@@ -42,7 +42,8 @@ import { EditRightComponent, EditRightComponentData } from './modal/edit-right/e
 @Component({
     selector: 'roles-management',
     templateUrl: './roles-management.component.html',
-    styleUrls: ['./roles-management.component.scss']
+    styleUrls: ['./roles-management.component.scss'],
+    standalone: false
 })
 export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry> {
 

@@ -27,7 +27,8 @@ import { addNewRole_translations_en_US } from './locale/add-new-role-translation
 
 @Component({
     templateUrl: './add-new-role.component.html',
-    styleUrls: ['./add-new-role.component.scss']
+    styleUrls: ['./add-new-role.component.scss'],
+    standalone: false
 })
 export class AddNewRoleComponent extends XcDialogComponent<XoRole, XoRole> {
 

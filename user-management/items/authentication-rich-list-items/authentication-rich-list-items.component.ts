@@ -39,7 +39,8 @@ export interface AuthenticationRichListItemData {
 
 @Component({
     templateUrl: './authentication-rich-list-items.component.html',
-    styleUrls: ['./authentication-rich-list-items.component.scss']
+    styleUrls: ['./authentication-rich-list-items.component.scss'],
+    standalone: false
 })
 export class AuthenticationRichListItemComponent extends XcRichListItemComponent<void, AuthenticationRichListItemData> {
 

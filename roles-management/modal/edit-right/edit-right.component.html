@@ -1,70 +1,88 @@
 
 <xc-dialog-wrapper [class]="editMode ? '' : 'new-right'" xc-form xc-i18n-context="acm.edit-right">
-    <ng-container header *ngIf="!editMode"><span xc-i18n>header-new</span></ng-container>
-    <ng-container header *ngIf="editMode"><span xc-i18n>header-edit</span></ng-container>
-    <section content>
+  @if (!editMode) {
+    <ng-container header><span xc-i18n>header-new</span></ng-container>
+  }
+  @if (editMode) {
+    <ng-container header><span xc-i18n>header-edit</span></ng-container>
+  }
+  <section content>
 
-        <!-- BEGIN - NEW MODE CONTENT  -->
-        <ng-container *ngIf="!editMode">
-            <xc-master-detail [xc-master-detail-opened]="{}" xc-master-detail-side-area-size="golden">
-                <xc-panel master>
-                    <section class="stretch scroll">
-                        <xc-table [xc-table-datasource]="rightsLocalTableDataSource"
-                            xc-table-allowsort
-                            xc-table-allowfilter
-                            xc-table-allowselect
-                            xc-table-lazyupdate
-                        ></xc-table>
-                    </section>
-                </xc-panel>
-                <xc-panel detail *ngIf="{}">
-                    <section class="stretch scroll">
-                        <div class="items-row" *ngIf="selectedRight">
-                            <xc-form-textarea
-                                label="label-documentation"
-                                xc-i18n
-                                [(value)]="selectedRight.documentation"
-                                xc-form-textarea-lines="8"
-                                xc-form-field-compact
-                                disabled
-                            ></xc-form-textarea>
-                        </div>
-                        <xc-rich-list *ngIf="showParameterListInput" [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
-                    </section>
-                </xc-panel>
-            </xc-master-detail>
-        </ng-container>
-        <!-- END - NEW MODE CONTENT  -->
-
-        <!-- BEGIN - EDIT MODE CONTENT  -->
-        <div class="edit-mode-container" *ngIf="editMode">
-            <div class="items-row" *ngIf="selectedRight">
-                <xc-form-textarea
+    <!-- BEGIN - NEW MODE CONTENT  -->
+    @if (!editMode) {
+      <xc-master-detail [xc-master-detail-opened]="{}" xc-master-detail-side-area-size="golden">
+        <xc-panel master>
+          <section class="stretch scroll">
+            <xc-table [xc-table-datasource]="rightsLocalTableDataSource"
+              xc-table-allowsort
+              xc-table-allowfilter
+              xc-table-allowselect
+              xc-table-lazyupdate
+            ></xc-table>
+          </section>
+        </xc-panel>
+        @if ({}) {
+          <xc-panel detail>
+            <section class="stretch scroll">
+              @if (selectedRight) {
+                <div class="items-row">
+                  <xc-form-textarea
                     label="label-documentation"
                     xc-i18n
                     [(value)]="selectedRight.documentation"
-                    xc-form-textarea-lines="15"
+                    xc-form-textarea-lines="8"
                     xc-form-field-compact
                     disabled
-                ></xc-form-textarea>
-            </div>
-            <div class="items-row" *ngIf="showParameterListInput">
-            <xc-panel>
+                  ></xc-form-textarea>
+                </div>
+              }
+              @if (showParameterListInput) {
                 <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
+              }
+            </section>
+          </xc-panel>
+        }
+      </xc-master-detail>
+    }
+    <!-- END - NEW MODE CONTENT  -->
+
+    <!-- BEGIN - EDIT MODE CONTENT  -->
+    @if (editMode) {
+      <div class="edit-mode-container">
+        @if (selectedRight) {
+          <div class="items-row">
+            <xc-form-textarea
+              label="label-documentation"
+              xc-i18n
+              [(value)]="selectedRight.documentation"
+              xc-form-textarea-lines="15"
+              xc-form-field-compact
+              disabled
+            ></xc-form-textarea>
+          </div>
+        }
+        @if (showParameterListInput) {
+          <div class="items-row">
+            <xc-panel>
+              <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
             </xc-panel>
-            </div>
-        </div>
-        <!-- END - EDIT MODE CONTENT  -->
+          </div>
+        }
+      </div>
+    }
+    <!-- END - EDIT MODE CONTENT  -->
 
-    </section>
+  </section>
 
-    <ng-container footer>
-        <div class="items-left">
-            <xc-button (click)="dismiss(null)" xc-i18n>button-cancel</xc-button>
-        </div>
-        <div class="items-right">
-            <xc-button *ngIf="!editMode" (click)="applyAndContinue()" [disabled]="!selectedRight || isFormInvalid()" xc-i18n>button-apply-and-add-another-right</xc-button>
-            <xc-button (click)="apply()" [disabled]="!selectedRight || isFormInvalid()" color="primary" xc-i18n>button-apply</xc-button>
-        </div>
-    </ng-container>
+  <ng-container footer>
+    <div class="items-left">
+      <xc-button (click)="dismiss(null)" xc-i18n>button-cancel</xc-button>
+    </div>
+    <div class="items-right">
+      @if (!editMode) {
+        <xc-button (click)="applyAndContinue()" [disabled]="!selectedRight || isFormInvalid()" xc-i18n>button-apply-and-add-another-right</xc-button>
+      }
+      <xc-button (click)="apply()" [disabled]="!selectedRight || isFormInvalid()" color="primary" xc-i18n>button-apply</xc-button>
+    </div>
+  </ng-container>
 </xc-dialog-wrapper>

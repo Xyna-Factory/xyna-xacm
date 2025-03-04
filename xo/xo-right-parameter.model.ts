@@ -142,9 +142,9 @@ export class XoRightParameter extends XoObject {
             // const flags = def.substring(lastIndex + 1); // I believe the factory does not allow flags in regex
             def = def.substring(index + 1, lastIndex);
             try {
-                // eslint-disable-next-line no-new
+                 
                 new RegExp(def);
-            } catch (e) {
+            } catch {
                 okay = false;
             }
             return new RightParameterValueError(okay ? '' : 'NOT A VALID REGEXP');

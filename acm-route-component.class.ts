@@ -24,8 +24,8 @@ import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcFormDirective, XDSIconName } from '@zeta/xc';
 
 import { Observable, of, Subject } from 'rxjs';
-import { ACMApiService } from './acm-api.service';
 
+import { ACMApiService } from './acm-api.service';
 import { RTC, XACM_WF } from './acm-consts';
 import { ACMNavigationService } from './acm-navigation.service';
 import { AcmRemoteTableDataSource } from './acm-remote-table-source.class';
@@ -37,7 +37,8 @@ import { XoDomainArray } from './xo/xo-domain.model';
 
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent implements OnInit {
 
@@ -145,18 +146,18 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
         const uid = this.currentObject ? this.currentObject.hashedUniqueKey : '';
 
         const url = '../' + uid;
-        const extras: NavigationExtras = {relativeTo: this.route};
+        const extras: NavigationExtras = { relativeTo: this.route };
         void this.router.navigate([url], extras);
     }
 
-    private getUrlQueries(): {[key: string]: string} {
+    private getUrlQueries(): { [key: string]: string } {
         const qstr = window.location.search.substring(1);
         if (qstr) {
             const raw = qstr.split('&');
             const qobj = {};
             raw.forEach(rstr => {
                 const index = rstr.indexOf('=');
-                Object.defineProperty(qobj, rstr.substr(0, index), {value: rstr.substr(index + 1), enumerable: true});
+                Object.defineProperty(qobj, rstr.substr(0, index), { value: rstr.substr(index + 1), enumerable: true });
             });
             return qobj;
         }
@@ -177,9 +178,9 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
         this.tableDataSource.selectionModel.clear();
     }
 
-    copy(tableObject?: T) {}
+    copy(tableObject?: T) { }
 
-    delete(tableObject?: T) {}
+    delete(tableObject?: T) { }
 
     protected abstract getTableWorkflow(): string;
 

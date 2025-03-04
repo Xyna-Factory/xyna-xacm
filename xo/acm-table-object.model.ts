@@ -32,10 +32,10 @@ export class ACMTableObject extends XoObject {
 
         for (i = 0; i < str.length; i++) {
             char = str.charCodeAt(i);
-            /* eslint-disable no-bitwise */
+             
             hash = ((hash << 5) - hash) + char;
             hash |= 0;
-            /* eslint-enable no-bitwise */
+             
         }
         return 'huk' + Math.abs(hash);
     }
