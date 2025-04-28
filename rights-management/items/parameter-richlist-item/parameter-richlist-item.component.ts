@@ -130,7 +130,7 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
         }
 
         if (this.injectedData.validityListenerObservable) {
-            this.validitySubscription = this.injectedData.validityListenerObservable.subscribe(subj => subj.next(this.isValid()));
+            this.validitySubscription = this.injectedData.validityListenerObservable.subscribe({ next: subj => subj.next(this.isValid())});
         }
     }
 

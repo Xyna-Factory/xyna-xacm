@@ -59,7 +59,9 @@ export class ACMNavigationService {
 
     constructor(private readonly router: Router) {
 
-        this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(ne => this.navigationEndSubject.next(ne));
+        this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe({
+            next: ne => this.navigationEndSubject.next(ne)
+        });
 
         this.router.events.subscribe(e => {
             if (e instanceof ActivationStart) {

@@ -24,8 +24,8 @@ import { XcDialogService, XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
 import { of, throwError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, filter, map } from 'rxjs/operators';
-import { ACMApiService } from '../acm-api.service';
 
+import { ACMApiService } from '../acm-api.service';
 import { extractError, getAllRights, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
 import { ACMSettingsService } from '../acm-settings.service';
@@ -68,14 +68,15 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.currentObjectChange.subscribe(roleTableEntry => {
             this.rightsLocalTableDataSource.resetFilters();
             if (roleTableEntry) {
-                this.getDetailsAboutTableEntry(roleTableEntry).subscribe(
-                    (role: XoRole) => {
+                this.getDetailsAboutTableEntry(roleTableEntry).subscribe({
+                    next: (role: XoRole) => {
                         if (role) {
                             this.role = role;
                             this.syncRightsTable();
                         }
-                    }, error => this.dialogService.error(error)
-                );
+                    }, 
+                    error: error => this.dialogService.error(error)
+                });
             }
         });
 
@@ -90,8 +91,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
         this.rightsLocalTableDataSource.refreshOnFilterChange = this.settings.tableRefreshOnFilterChange;
 
-        this.rightsLocalTableDataSource.selectionModel.selectionChange
-            .subscribe(model => this.selectedRight = model.selection[0]);
+        this.rightsLocalTableDataSource.selectionModel.selectionChange.subscribe(model => this.selectedRight = model.selection[0]);
 
         this.rightsLocalTableDataSource.actionElements = [
             {
@@ -120,34 +120,34 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
     }
 
     create(ref?: XoRole) {
-        this.dialogService.custom<XoRole, XoRole>(AddNewRoleComponent, ref).afterDismissResult()
-            .subscribe(
-                (role: XoRole) => {
-                    if (role) {
-                        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.CreateRole, role, XoRole, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-                            (result: StartOrderResult) => {
-                                if (result && !result.errorMessage) {
-                                    this.refresh();
-                                } else {
-                                    this.dialogService.error(result.errorMessage);
-                                }
-                            },
-                            error => this.dialogService.error(extractError(error))
-                        );
-                    }
+        this.dialogService.custom<XoRole, XoRole>(AddNewRoleComponent, ref).afterDismissResult().subscribe(
+            (role: XoRole) => {
+                if (role) {
+                    this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.CreateRole, role, XoRole, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+                        next: (result: StartOrderResult) => {
+                            if (result && !result.errorMessage) {
+                                this.refresh();
+                            } else {
+                                this.dialogService.error(result.errorMessage);
+                            }
+                        },
+                        error: error => this.dialogService.error(extractError(error))
+                    });
                 }
-            );
+            }
+        );
     }
 
     copy(roleTableEntry: XoRoleTableEntry) {
         if (roleTableEntry) {
-            this.getDetailsAboutTableEntry(roleTableEntry).subscribe(
-                (role: XoRole) => {
+            this.getDetailsAboutTableEntry(roleTableEntry).subscribe({
+                next: (role: XoRole) => {
                     if (role) {
                         this.create(role);
                     }
-                }, error => this.dialogService.error(error)
-            );
+                }, 
+                error: error => this.dialogService.error(error)
+            });
         }
     }
 
@@ -162,8 +162,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
         const sendRequest = () => {
             if (role instanceof XoRole) {
-                this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.DeleteRole, role, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-                    result => {
+                this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.DeleteRole, role, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+                    next: result => {
                         if (result && !result.errorMessage) {
                             this.currentObject = null;
                             this.role = null;
@@ -172,8 +172,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                             this.dialogService.error(result.errorMessage);
                         }
                     },
-                    error => this.dialogService.error(extractError(error))
-                );
+                    error: error => this.dialogService.error(extractError(error))
+                });
             }
         };
 
@@ -189,14 +189,15 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
     }
 
     updateRights() {
-        getAllRights(this.apiService, this.apiService.xoLocale).subscribe(
-            (rights: XoRightArray) => {
+        getAllRights(this.apiService, this.apiService.xoLocale).subscribe({
+            next: (rights: XoRightArray) => {
                 if (rights) {
                     this.allRights = rights;
                     this.editRight(null);
                 }
-            }, error => this.dialogService.error(error)
-        );
+            }, 
+            error: error => this.dialogService.error(error)
+        });
     }
 
     getDetailsAboutTableEntry(roleTableEntry: XoRoleTableEntry): Observable<XoRole> {
@@ -263,8 +264,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     save() {
         const clone = this.role.clone();
-        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.ModifyRole, clone, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-            (result: StartOrderResult) => {
+        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.ModifyRole, clone, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+            next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
                     this.refresh();
                     this.closeDetails();
@@ -272,8 +273,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                     this.dialogService.error(result.errorMessage);
                 }
             },
-            error => this.dialogService.error(extractError(error))
-        );
+            error: error => this.dialogService.error(extractError(error))
+        });
     }
 
     editRight(refRight: XoRight) {

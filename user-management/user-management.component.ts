@@ -112,21 +112,20 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
             domains: this.getDomainsObservable(),
             refUser
         };
-        this.dialogService.custom<XoCreateUserRequest, AddNewUserComponentData>(AddNewUserComponent, data).afterDismissResult()
-            .subscribe(
-                userResult => {
-                    if (userResult) {
-                        this.createUser(userResult).subscribe(requestResult => {
-                            if (requestResult && requestResult.success) {
-                                this.refresh(true);
-                            } else {
-                                this.operationFailed();
-                            }
-                        });
-                    }
-                },
-                error => this.dialogService.error(extractError(error))
-            );
+        this.dialogService.custom<XoCreateUserRequest, AddNewUserComponentData>(AddNewUserComponent, data).afterDismissResult().subscribe({
+            next: userResult => {
+                if (userResult) {
+                    this.createUser(userResult).subscribe(requestResult => {
+                        if (requestResult && requestResult.success) {
+                            this.refresh(true);
+                        } else {
+                            this.operationFailed();
+                        }
+                    });
+                }
+            },
+            error: error => this.dialogService.error(extractError(error))
+        });
     }
 
     copy(tableObject?: XoUser) {
@@ -148,16 +147,18 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
 
             request.domains = this.convertDomainStringToArray(this.currentObject.domains);
 
-            this.updateUser(request).subscribe(requestResult => {
-                if (requestResult && requestResult.success) {
-                    this.refresh();
-                    this.closeDetails();
-                } else {
-                    this.operationFailed();
-                }
-                this.resetPasswordForm();
-            },
-                error => this.dialogService.error(extractError(error)));
+            this.updateUser(request).subscribe({
+                next: requestResult => {
+                    if (requestResult && requestResult.success) {
+                        this.refresh();
+                        this.closeDetails();
+                    } else {
+                        this.operationFailed();
+                    }
+                    this.resetPasswordForm();
+                },
+                error: error => this.dialogService.error(extractError(error))
+            });
         }
     }
 
@@ -170,8 +171,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         const question = this.i18nService.translate('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
 
         const sendRequest = () => {
-            this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-                result => {
+            this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+                next: result => {
                     if (result && !result.errorMessage) {
                         this.currentObject = null;
                         this.refresh();
@@ -179,8 +180,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
                         this.dialogService.error(result.errorMessage);
                     }
                 },
-                error => this.dialogService.error(extractError(error))
-            );
+                error: error => this.dialogService.error(extractError(error))
+            });
         };
 
         this.dialogService.confirm(questionTitle, question).afterDismissResult().subscribe(res => {
@@ -212,8 +213,9 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     private getRolesObservable(): Observable<XoRoleNameArray> {
         const subj = new Subject<XoRoleNameArray>();
         const wf = XACM_WF.xmcp.xacm.usermanagement.GetRoles;
-        this.apiService.startOrder(RTC, wf, [], XoRoleNameArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-            result => {
+    
+        this.apiService.startOrder(RTC, wf, [], XoRoleNameArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+            next: result => {
                 if (result) {
                     if (result.errorMessage) {
                         subj.error(result.errorMessage);
@@ -222,10 +224,10 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
                     }
                 }
             },
-            error => subj.error(error),
-            () => subj.complete()
-        );
-
+            error: error => subj.error(error),
+            complete: () => subj.complete()
+        });
+    
         return subj.asObservable();
     }
 

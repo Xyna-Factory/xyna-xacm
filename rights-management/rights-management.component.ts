@@ -20,8 +20,8 @@ import { Component, Injector } from '@angular/core';
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcRichListItem } from '@zeta/xc';
-import { ACMApiService } from '../acm-api.service';
 
+import { ACMApiService } from '../acm-api.service';
 import { extractError, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
 import { ACMSettingsService } from '../acm-settings.service';
@@ -54,7 +54,7 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         this.i18nService.setTranslations(LocaleService.DE_DE, rights_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, rights_translations_en_US);
 
-        this.currentObjectChange.subscribe(cur => this.syncParameterRichlistItems());
+        this.currentObjectChange.subscribe({ next: () => this.syncParameterRichlistItems() });
     }
 
     protected getTableWorkflow(): string {
@@ -95,8 +95,8 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         request.documentation = this.currentObject.documentation;
         request.locale = this.apiService.xoLocale;
 
-        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.ModifyRight, request, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-            (result: StartOrderResult) => {
+        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.ModifyRight, request, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+            next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
                     this.refresh();
                     this.closeDetails();
@@ -104,8 +104,8 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
                     this.dialogService.error(result.errorMessage);
                 }
             },
-            error => this.dialogService.error(extractError(error))
-        );
+            error: error => this.dialogService.error(extractError(error))
+        });
     }
 
 
@@ -113,7 +113,7 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         const right = tableObject || this.currentObject;
 
         const questionTitle = this.i18nService.translate('xmcp.xacm.rights.question');
-        const question = this.i18nService.translate('xmcp.xacm.rights.delete', {key: '%name%', value: right.rightName});
+        const question = this.i18nService.translate('xmcp.xacm.rights.delete', { key: '%name%', value: right.rightName });
 
         const sendRequest = () => {
             this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.DeleteRight, right, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
