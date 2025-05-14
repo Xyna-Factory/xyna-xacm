@@ -104,7 +104,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
         this.tableDataSource = new AcmRemoteTableDataSource(apiService, i18nService, RTC, this.getTableWorkflow());
 
-        this.tableDataSource.selectionModel.selectionChange.subscribe(model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null);
+        this.tableDataSource.selectionModel.selectionChange.subscribe({ next: model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null});
 
         this.tableDataSource.actionElements = [
             {

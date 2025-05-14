@@ -16,10 +16,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ApiService, RuntimeContext, StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
+
 import { Observable, Subject } from 'rxjs';
-
-
-
 
 import { XoACMLocale } from './xo/xo-locale.model';
 import { XoRightArray } from './xo/xo-right.model';
@@ -64,8 +62,8 @@ export function getAllRights(apiService: ApiService, xoLocale: XoACMLocale): Obs
 
     const subject = new Subject<XoRightArray>();
 
-    apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.GetAllRights, xoLocale, XoRightArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
-        (result: StartOrderResult) => {
+    apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.GetAllRights, xoLocale, XoRightArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+        next: (result: StartOrderResult) => {
             if (result && !result.errorMessage) {
                 subject.next(result.output[0] as XoRightArray);
             } else {
@@ -73,11 +71,11 @@ export function getAllRights(apiService: ApiService, xoLocale: XoACMLocale): Obs
             }
             subject.complete();
         },
-        error => {
+        error: error => {
             subject.error(extractError(error));
             subject.complete();
         }
-    );
+    });
 
     return subject.asObservable();
 }

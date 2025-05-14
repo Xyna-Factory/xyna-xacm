@@ -86,8 +86,8 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
             this.syncRightsTable(false);
         }
 
-        this.rightsLocalTableDataSource.selectionModel.selectionChange.subscribe(
-            (model: XcSelectionModel<XoRight>) => {
+        this.rightsLocalTableDataSource.selectionModel.selectionChange.subscribe({
+             next: (model: XcSelectionModel<XoRight>) => {
                 const right = model.selection[0];
 
                 if (right) {
@@ -98,7 +98,7 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
                 this.syncParameterRichlistItems();
                 this.cdr.detectChanges();
             }
-        );
+        });
     }
 
 
@@ -152,7 +152,7 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
     isFormInvalid(): boolean {
         const filterValiditySubject = new Subject<boolean>();
         let filterValid = true;
-        filterValiditySubject.subscribe(res => filterValid = filterValid && res);
+        filterValiditySubject.subscribe({ next: res => filterValid = filterValid && res });
         this.parameterValiditySubject.next(filterValiditySubject);
         return !filterValid;
     }

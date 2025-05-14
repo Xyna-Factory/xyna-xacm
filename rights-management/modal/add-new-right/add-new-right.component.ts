@@ -178,7 +178,7 @@ export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRight
     getItemsValidity(): boolean {
         const validitySubject = new Subject<boolean>();
         let valid = true;
-        validitySubject.subscribe(res => valid &&= res);
+        validitySubject.subscribe({ next: res => valid &&= res });
         this.parameterValiditySubject.next(validitySubject);
         return valid;
     }
