@@ -18,7 +18,9 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcDialogComponent, XcFormDirective } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { XoRole } from '../../../xo/xo-role.model';
 import { addNewRole_translations_de_DE } from './locale/add-new-role-translations.de-DE';
@@ -28,7 +30,7 @@ import { addNewRole_translations_en_US } from './locale/add-new-role-translation
 @Component({
     templateUrl: './add-new-role.component.html',
     styleUrls: ['./add-new-role.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class AddNewRoleComponent extends XcDialogComponent<XoRole, XoRole> {
 

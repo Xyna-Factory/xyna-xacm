@@ -19,7 +19,9 @@ import { Component, Injector, OnDestroy, ViewChild } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { I18nService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcAutocompleteDataWrapper, XcFormInputComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { Observable, Subject, Subscription } from 'rxjs';
 
@@ -60,7 +62,7 @@ export interface ParameterRichlistItemData {
 @Component({
     templateUrl: './parameter-richlist-item.component.html',
     styleUrls: ['./parameter-richlist-item.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ParameterRichlistItemComponent extends XcRichListItemComponent<void, ParameterRichlistItemData> implements OnDestroy {
 

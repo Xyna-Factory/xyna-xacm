@@ -40,9 +40,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
     imports: [
         CommonModule,
         RouterModule,
-        ZetaModule
-    ],
-    declarations: [
+        ZetaModule,
         AcmComponent,
         AddNewRightComponent,
         AddNewRoleComponent,

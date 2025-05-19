@@ -19,7 +19,9 @@ import { Component, Injector } from '@angular/core';
 
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcDialogService, XcRichListItem } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { ACMApiService } from '../acm-api.service';
 import { extractError, RTC, XACM_WF } from '../acm-consts';
@@ -37,7 +39,7 @@ import { AddNewRightComponent, AddNewRightComponentData } from './modal/add-new-
     selector: 'rights-management',
     templateUrl: './rights-management.component.html',
     styleUrls: ['./rights-management.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 

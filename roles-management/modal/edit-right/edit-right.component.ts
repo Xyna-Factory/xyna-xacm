@@ -18,7 +18,9 @@
 import { ChangeDetectorRef, Component, Injector } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcDialogComponent, XcLocalTableDataSource, XcRichListItem, XcSelectionModel } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { Subject } from 'rxjs';
 
@@ -41,7 +43,7 @@ export interface EditRightComponentData {
 @Component({
     templateUrl: './edit-right.component.html',
     styleUrls: ['./edit-right.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class EditRightComponent extends XcDialogComponent<void, EditRightComponentData> {
 

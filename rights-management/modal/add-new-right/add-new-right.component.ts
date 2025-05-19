@@ -18,7 +18,9 @@
 import { ChangeDetectorRef, Component, Injector, ViewChild } from '@angular/core';
 
 import { I18nParam, I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcDialogComponent, XcFormDirective, XcRichListItem } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { Subject } from 'rxjs';
 
@@ -38,7 +40,7 @@ export interface AddNewRightComponentData {
 @Component({
     templateUrl: './add-new-right.component.html',
     styleUrls: ['./add-new-right.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRightComponentData> {
 

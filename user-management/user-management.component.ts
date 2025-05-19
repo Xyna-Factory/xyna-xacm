@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -20,7 +21,9 @@ import { Component, Injector, OnDestroy } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcAutocompleteDataWrapper, XcDialogService, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
@@ -43,7 +46,7 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
     selector: 'user-management',
     templateUrl: './user-management.component.html',
     styleUrls: ['./user-management.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, NgStyle]
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 

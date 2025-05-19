@@ -19,7 +19,9 @@ import { Component, Injector } from '@angular/core';
 
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcDialogService, XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { of, throwError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -43,7 +45,7 @@ import { EditRightComponent, EditRightComponentData } from './modal/edit-right/e
     selector: 'roles-management',
     templateUrl: './roles-management.component.html',
     styleUrls: ['./roles-management.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry> {
 
