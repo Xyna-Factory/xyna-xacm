@@ -21,7 +21,6 @@ import { RedirectComponent, redirectGuardCanActivate, redirectGuardCanDeactivate
 import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
 import { AcmComponent } from './acm.component';
-import { AcmModule } from './acm.module';
 import { RIGHT_ACM } from './const';
 import { RightsManagementComponent } from './rights-management/rights-management.component';
 import { RolesManagementComponent } from './roles-management/roles-management.component';
@@ -85,8 +84,7 @@ export const AcmRoutes: Routes = [
 ];
 
 export const AcmRoutingModules = [
-    RouterModule.forChild(AcmRoutes),
-    AcmModule
+    RouterModule.forChild(AcmRoutes)
 ];
 
 export const AcmRoutingProviders = [

@@ -17,16 +17,21 @@
  */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { ApiService, StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService } from '@zeta/xc';
+
 import { catchError, EMPTY, filter, Observable } from 'rxjs';
+
 import { extractError, RTC, XACM_WF } from './acm-consts';
 import { XoACMLocale } from './xo/xo-locale.model';
 import { XoRight } from './xo/xo-right.model';
 
 
-@Injectable()
+@Injectable({    
+    providedIn: 'root'
+})
 export class ACMApiService extends ApiService {
 
     defaultStartOrderOptions1 = new StartOrderOptionsBuilder()

@@ -29,7 +29,9 @@ export enum ScreenreaderPriority {
 }
 
 
-@Injectable()
+@Injectable({    
+    providedIn: 'root'
+})
 export class ACMNavigationService {
 
     private readonly navigationEndSubject = new Subject<NavigationEnd>();
