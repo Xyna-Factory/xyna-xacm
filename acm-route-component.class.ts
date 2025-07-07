@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,8 +16,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Component, Injector, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -40,7 +41,7 @@ import { XoDomainArray } from './xo/xo-domain.model';
     template: '',
     standalone: false
 })
-export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent implements OnInit {
+export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
 
     @ViewChild('detailsForm', { read: XcFormDirective, static: false })
     detailsPanelForm: XcFormDirective;
@@ -62,9 +63,13 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
     private curObj: T;
     set currentObject(value: T) {
-        this.curObj = value;
-        this.currentObjectChangeSubject.next(value);
-        this.updateUrl();
+        if (value) {
+            this.curObj = value;
+            this.currentObjectChangeSubject.next(value);
+            if (value.hashedUniqueKey) {
+                this.updateUrl();
+            }
+        }
     }
 
     get currentObject(): T {
@@ -90,7 +95,8 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
         protected readonly apiService: ACMApiService,
         protected readonly i18nService: I18nService,
         protected readonly dialogService: XcDialogService,
-        protected readonly settings: ACMSettingsService
+        protected readonly settings: ACMSettingsService,
+        protected readonly location: Location
     ) {
         super();
         this.i18nService.setTranslations(LocaleService.DE_DE, acm_route_translations_de_DE);
@@ -104,7 +110,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
         this.tableDataSource = new AcmRemoteTableDataSource(apiService, i18nService, RTC, this.getTableWorkflow());
 
-        this.tableDataSource.selectionModel.selectionChange.subscribe({ next: model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null});
+        this.tableDataSource.selectionModel.selectionChange.subscribe({ next: model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null });
 
         this.tableDataSource.actionElements = [
             {
@@ -142,13 +148,27 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
     }
 
-    private updateUrl() {
-        const uid = this.currentObject ? this.currentObject.hashedUniqueKey : '';
+    private updateUrl(): void {
+        const uid = this.currentObject?.hashedUniqueKey;
+        const prefix = this.getRoutePrefix();
 
-        const url = '../' + uid;
-        const extras: NavigationExtras = { relativeTo: this.route };
-        void this.router.navigate([url], extras);
+        const segments = this.router.url.split('/').filter(Boolean);
+
+        const index = segments.lastIndexOf(prefix);
+
+        if (index !== -1) {
+            if (segments.length > index + 1) {
+                segments[index + 1] = uid;
+            } else if (uid) {
+                segments.push(uid);
+            }
+        }
+
+        const newUrl = '/' + segments.join('/');
+        this.location.replaceState(newUrl);
     }
+
+    protected abstract getRoutePrefix(): string;
 
     private getUrlQueries(): { [key: string]: string } {
         const qstr = window.location.search.substring(1);
@@ -246,5 +266,4 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
         super.onShow();
     }
-
 }
