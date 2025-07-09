@@ -17,7 +17,7 @@ import { Location } from '@angular/common';
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { Component, Injector, OnDestroy } from '@angular/core';
+import { Component, inject, Injector, OnDestroy } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -48,6 +48,8 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 
+    protected readonly httpClient = inject(HttpClient);
+
     pw = '';
     pwr = '';
 
@@ -56,16 +58,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     usedChangeSubject = new Subject<AuthenticationChangedObject>();
     subscriptionOfUsedChangeSubject: Subscription;
 
-    constructor(
-        injector: Injector,
-        apiService: ACMApiService,
-        i18nService: I18nService,
-        dialogService: XcDialogService,
-        private readonly httpClient: HttpClient,
-        settings: ACMSettingsService,
-        location: Location,
-    ) {
-        super(injector, apiService, i18nService, dialogService, settings, location);
+    constructor() {
+        super();
 
         this.roleDataWrapper = new XcAutocompleteDataWrapper(
             () => this.currentObject ? this.currentObject.role : null,

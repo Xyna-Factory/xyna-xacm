@@ -16,7 +16,7 @@ import { Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, inject, Injector, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
@@ -42,6 +42,13 @@ import { XoDomainArray } from './xo/xo-domain.model';
     standalone: false
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
+
+    protected readonly injector = inject(Injector);
+    protected readonly apiService = inject(ACMApiService);
+    protected readonly i18nService = inject(I18nService);
+    protected readonly dialogService = inject(XcDialogService);
+    protected readonly settings = inject(ACMSettingsService);
+    protected readonly location = inject(Location);
 
     @ViewChild('detailsForm', { read: XcFormDirective, static: false })
     detailsPanelForm: XcFormDirective;
@@ -90,25 +97,18 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
         return (this.i18nService.language === LocaleService.EN_US);
     }
 
-    constructor(
-        readonly injector: Injector,
-        protected readonly apiService: ACMApiService,
-        protected readonly i18nService: I18nService,
-        protected readonly dialogService: XcDialogService,
-        protected readonly settings: ACMSettingsService,
-        protected readonly location: Location
-    ) {
+    constructor() {
         super();
         this.i18nService.setTranslations(LocaleService.DE_DE, acm_route_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, acm_route_translations_en_US);
 
 
-        this.router = injector.get(Router);
+        this.router = this.injector.get(Router);
 
-        this.route = injector.get(ActivatedRoute);
-        this.acmNavigationService = injector.get(ACMNavigationService);
+        this.route = this.injector.get(ActivatedRoute);
+        this.acmNavigationService = this.injector.get(ACMNavigationService);
 
-        this.tableDataSource = new AcmRemoteTableDataSource(apiService, i18nService, RTC, this.getTableWorkflow());
+        this.tableDataSource = new AcmRemoteTableDataSource(this.apiService, this.i18nService, RTC, this.getTableWorkflow());
 
         this.tableDataSource.selectionModel.selectionChange.subscribe({ next: model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null });
 
@@ -118,14 +118,14 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
                 onAction: row => {
                     this.copy(row);
                 },
-                tooltip: i18nService.translate('xmcp.xacm.acm-route.copy')
+                tooltip: this.i18nService.translate('xmcp.xacm.acm-route.copy')
             },
             {
                 iconName: XDSIconName.DELETE,
                 onAction: row => {
                     this.delete(row);
                 },
-                tooltip: i18nService.translate('xmcp.xacm.acm-route.delete')
+                tooltip: this.i18nService.translate('xmcp.xacm.acm-route.delete')
             }
         ];
 

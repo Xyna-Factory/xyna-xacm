@@ -44,15 +44,8 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 
     parameterRichlistItems: XcRichListItem<ParameterRichlistItemData>[] = [];
 
-    constructor(
-        injector: Injector,
-        apiService: ACMApiService,
-        i18nService: I18nService,
-        dialogService: XcDialogService,
-        settings: ACMSettingsService,
-        location: Location,
-    ) {
-        super(injector, apiService, i18nService, dialogService, settings, location);
+    constructor() {
+        super();
         this.i18nService.setTranslations(LocaleService.DE_DE, rights_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, rights_translations_en_US);
 
