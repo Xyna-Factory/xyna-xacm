@@ -56,7 +56,7 @@ export const AcmRoutes: Routes = [
                 path: 'users/:uniqueKey',
                 component: UserManagementComponent,
                 canDeactivate: [redirectGuardCanDeactivate],
-                data: { reuse: 'user', redirectKey: root, title: 'Users' }
+                data: { reuse: 'users', redirectKey: root, title: 'Users' }
             },
             {
                 path: 'roles',

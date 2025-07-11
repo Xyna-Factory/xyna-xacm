@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,7 +17,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { Component, Injector, OnDestroy } from '@angular/core';
+import { Component, inject, Injector, OnDestroy } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -47,6 +48,8 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 
+    protected readonly httpClient = inject(HttpClient);
+
     pw = '';
     pwr = '';
 
@@ -55,15 +58,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     usedChangeSubject = new Subject<AuthenticationChangedObject>();
     subscriptionOfUsedChangeSubject: Subscription;
 
-    constructor(
-        injector: Injector,
-        apiService: ACMApiService,
-        i18nService: I18nService,
-        dialogService: XcDialogService,
-        private readonly httpClient: HttpClient,
-        settings: ACMSettingsService
-    ) {
-        super(injector, apiService, i18nService, dialogService, settings);
+    constructor() {
+        super();
 
         this.roleDataWrapper = new XcAutocompleteDataWrapper(
             () => this.currentObject ? this.currentObject.role : null,
@@ -90,6 +86,10 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
 
     protected getTableWorkflow(): string {
         return XACM_WF.xmcp.xacm.usermanagement.GetUsers;
+    }
+
+    protected getRoutePrefix(): string {
+        return 'users';
     }
 
     beforeInitTableRefresh() {
@@ -213,7 +213,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     private getRolesObservable(): Observable<XoRoleNameArray> {
         const subj = new Subject<XoRoleNameArray>();
         const wf = XACM_WF.xmcp.xacm.usermanagement.GetRoles;
-    
+
         this.apiService.startOrder(RTC, wf, [], XoRoleNameArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: result => {
                 if (result) {
@@ -227,7 +227,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
             error: error => subj.error(error),
             complete: () => subj.complete()
         });
-    
+
         return subj.asObservable();
     }
 
