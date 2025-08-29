@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -45,14 +46,8 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 
     parameterRichlistItems: XcRichListItem<ParameterRichlistItemData>[] = [];
 
-    constructor(
-        injector: Injector,
-        apiService: ACMApiService,
-        i18nService: I18nService,
-        dialogService: XcDialogService,
-        settings: ACMSettingsService
-    ) {
-        super(injector, apiService, i18nService, dialogService, settings);
+    constructor() {
+        super();
         this.i18nService.setTranslations(LocaleService.DE_DE, rights_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, rights_translations_en_US);
 
@@ -61,6 +56,10 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 
     protected getTableWorkflow(): string {
         return XACM_WF.xmcp.xacm.rightsmanagement.QueryRightsTableInfo;
+    }
+
+    protected getRoutePrefix(): string {
+        return 'rights';
     }
 
     get numberOfParameters(): number {

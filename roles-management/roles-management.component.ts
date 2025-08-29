@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -58,14 +59,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     role: XoRole;
 
-    constructor(
-        injector: Injector,
-        apiService: ACMApiService,
-        i18nService: I18nService,
-        dialogService: XcDialogService,
-        settings: ACMSettingsService
-    ) {
-        super(injector, apiService, i18nService, dialogService, settings);
+    constructor() {
+        super();
 
         this.currentObjectChange.subscribe(roleTableEntry => {
             this.rightsLocalTableDataSource.resetFilters();
@@ -76,7 +71,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                             this.role = role;
                             this.syncRightsTable();
                         }
-                    }, 
+                    },
                     error: error => this.dialogService.error(error)
                 });
             }
@@ -116,6 +111,10 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         return XACM_WF.xmcp.xacm.rolesmanagement.GetRoles;
     }
 
+    protected getRoutePrefix(): string {
+        return 'roles';
+    }
+
     beforeInitTableRefresh() {
         super.beforeInitTableRefresh();
         this.tableDataSource.output = XoRoleTableEntryArray;
@@ -147,7 +146,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                     if (role) {
                         this.create(role);
                     }
-                }, 
+                },
                 error: error => this.dialogService.error(error)
             });
         }
@@ -197,7 +196,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                     this.allRights = rights;
                     this.editRight(null);
                 }
-            }, 
+            },
             error: error => this.dialogService.error(error)
         });
     }
