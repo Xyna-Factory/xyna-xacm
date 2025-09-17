@@ -17,11 +17,11 @@
  */
 import { NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
-import { LocaleService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
+import { I18nModule, LocaleService } from '@zeta/i18n';
+import { XcAutocompleteDataWrapper, XcModule, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
 

@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,7 +17,7 @@ import { Location } from '@angular/common';
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, Injector, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -39,7 +39,10 @@ import { XoDomainArray } from './xo/xo-domain.model';
 
 @Component({
     template: '',
-    standalone: false
+    imports: [
+        CommonModule,
+        RouterModule,
+    ]
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
 
