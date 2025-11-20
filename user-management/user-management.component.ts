@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,19 +15,18 @@ import { Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, Injector, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcDialogService, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
+import { I18nModule, LocaleService } from '@zeta/i18n';
+import { XcAutocompleteDataWrapper, XcModule, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
-import { ACMApiService } from '../acm-api.service';
 import { extractError, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
-import { ACMSettingsService } from '../acm-settings.service';
 import { XoCreateUserRequest } from '../xo/xo-create-user-request.model';
 import { XoRoleNameArray } from '../xo/xo-role-name.model';
 import { XoUpdateUserRequest } from '../xo/xo-update-user-request.model';
@@ -44,7 +42,7 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
     selector: 'user-management',
     templateUrl: './user-management.component.html',
     styleUrls: ['./user-management.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, NgStyle]
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 

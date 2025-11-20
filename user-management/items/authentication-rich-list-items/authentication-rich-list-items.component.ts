@@ -18,6 +18,7 @@
 import { Component, Injector } from '@angular/core';
 
 import { XcRichListItemComponent } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { Subject } from 'rxjs';
 
@@ -40,7 +41,7 @@ export interface AuthenticationRichListItemData {
 @Component({
     templateUrl: './authentication-rich-list-items.component.html',
     styleUrls: ['./authentication-rich-list-items.component.scss'],
-    standalone: false
+    imports: [XcModule]
 })
 export class AuthenticationRichListItemComponent extends XcRichListItemComponent<void, AuthenticationRichListItemData> {
 

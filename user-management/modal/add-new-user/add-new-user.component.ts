@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,7 +19,9 @@
 import { Component, Injector, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nModule } from '@zeta/i18n/i18n.module';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
+import { XcModule } from '@zeta/xc/xc.module';
 
 import { Observable, Subject, Subscription } from 'rxjs';
 
@@ -41,7 +44,7 @@ export interface AddNewUserComponentData {
 @Component({
     templateUrl: './add-new-user.component.html',
     styleUrls: ['./add-new-user.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, NgClass]
 })
 export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, AddNewUserComponentData> {
 
