@@ -1,4 +1,3 @@
-import { CommonModule, Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,6 +15,7 @@ import { CommonModule, Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { Location } from '@angular/common';
 import { Component, inject, Injector, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
@@ -40,9 +40,8 @@ import { XoDomainArray } from './xo/xo-domain.model';
 @Component({
     template: '',
     imports: [
-        CommonModule,
-        RouterModule,
-    ]
+    RouterModule
+]
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
 
