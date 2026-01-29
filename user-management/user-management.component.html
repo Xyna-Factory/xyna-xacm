@@ -46,23 +46,29 @@
             <h3 class="items-left" xc-i18n>header-new-password</h3>
           </header>
           <section class="pw-form">
-            <xc-form-input
-              #pwInput
-              type="password"
-              xc-form-field-suffix="password"
-              label="header-new-password"
-              [(value)]="pw"
-              xc-i18n
-            ></xc-form-input>
-            <xc-form-input
-              #pwrInput
-              [ngStyle]="{display: pwInput.value ? 'block' : 'none'}"
-              type="password"
-              xc-form-field-suffix="password"
-              label="label-password-confirmation"
-              [(value)]="pwr"
-              xc-i18n
-            ></xc-form-input>
+            <form>
+              <xc-form-input
+                #pwInput
+                type="password"
+                xc-form-field-suffix="password"
+                label="header-new-password"
+                [(value)]="pw"
+                name="new-password"          
+                autocomplete="new-password"  
+                xc-i18n
+              ></xc-form-input>
+              <xc-form-input
+                #pwrInput
+                [ngStyle]="{display: pwInput.value ? 'block' : 'none'}"
+                type="password"
+                xc-form-field-suffix="password"
+                label="label-password-confirmation"
+                [(value)]="pwr"
+                name="confirm-password"      
+                autocomplete="new-password"  
+                xc-i18n
+              ></xc-form-input>
+            </form>
           </section>
           <footer>
             @if (!passwordsMatch) {
