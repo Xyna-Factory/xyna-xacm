@@ -2,36 +2,41 @@
     <ng-container header><span xc-i18n>header</span></ng-container>
 
     <section content>
+        <form>
+            <xc-form-input label="label-username" name="username" autocomplete="username" [(value)]="user.username" xc-form-validator-required xc-i18n></xc-form-input>
+            <xc-form-autocomplete
+                label="label-role"
+                [xc-form-autocomplete-options]="roleDataWrapper.values"
+                [(xc-form-autocomplete-option)]="roleDataWrapper.value"
+                placeholder="placeholder-choose"
+                xc-form-field-suffix="clear"
+                xc-form-autocomplete-fulltextsearch
+                xc-i18n
+                xc-form-validator-required
+                name="role" 
+            ></xc-form-autocomplete>
+            <xc-form-input
+                label="label-password"
+                type="password"
+                xc-form-field-suffix="password"
+                [(value)]="pw"
+                xc-form-validator-required
+                name="new-password"           
+                autocomplete="new-password"   
+                xc-i18n
+            ></xc-form-input>
 
-        <xc-form-input label="label-username" [(value)]="user.username" xc-form-validator-required xc-i18n></xc-form-input>
-        <xc-form-autocomplete
-            label="label-role"
-            [xc-form-autocomplete-options]="roleDataWrapper.values"
-            [(xc-form-autocomplete-option)]="roleDataWrapper.value"
-            placeholder="placeholder-choose"
-            xc-form-field-suffix="clear"
-            xc-form-autocomplete-fulltextsearch
-            xc-i18n
-            xc-form-validator-required
-        ></xc-form-autocomplete>
-
-        <xc-form-input
-            label="label-password"
-            type="password"
-            xc-form-field-suffix="password"
-            [(value)]="pw"
-            xc-form-validator-required
-            xc-i18n
-        ></xc-form-input>
-
-        <xc-form-input
-            label="label-password-confirmation"
-            type="password"
-            xc-form-field-suffix="password"
-            [(value)]="pwr"
-            xc-form-validator-required
-            xc-i18n
-        ></xc-form-input>
+            <xc-form-input
+                label="label-password-confirmation"
+                type="password"
+                xc-form-field-suffix="password"
+                [(value)]="pwr"
+                xc-form-validator-required
+                name="confirm-password"       
+                autocomplete="new-password"  
+                xc-i18n
+            ></xc-form-input>
+        </form>
 
         <div><span [ngClass]="passwordMatchClass" xc-i18n>span-passwords-do-not-match</span></div>
 
