@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { I18nModule } from '@zeta/i18n/i18n.module';
@@ -33,6 +33,8 @@ import { addNewRole_translations_en_US } from './locale/add-new-role-translation
     imports: [XcModule, I18nModule]
 })
 export class AddNewRoleComponent extends XcDialogComponent<XoRole, XoRole> {
+    private readonly i18nService = inject(I18nService);
+
 
     @ViewChild(XcFormDirective, {static: false})
     modalForm: XcFormDirective;
@@ -43,8 +45,8 @@ export class AddNewRoleComponent extends XcDialogComponent<XoRole, XoRole> {
 
     role: XoRole = new XoRole();
 
-    constructor(injector: Injector, private readonly i18nService: I18nService) {
-        super(injector);
+    constructor() {
+        super();
 
         this.i18nService.setTranslations(LocaleService.DE_DE, addNewRole_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, addNewRole_translations_en_US);

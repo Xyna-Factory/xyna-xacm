@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 
 import { I18nParam, I18nService, LocaleService } from '@zeta/i18n';
 import { I18nModule } from '@zeta/i18n/i18n.module';
@@ -43,6 +43,8 @@ export interface AddNewRightComponentData {
     imports: [XcModule, I18nModule]
 })
 export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRightComponentData> {
+    private readonly cdr = inject(ChangeDetectorRef);
+
 
     @ViewChild(XcFormDirective, {static: false})
     modalForm: XcFormDirective;
@@ -72,8 +74,8 @@ export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRight
 
     private readonly parameterValiditySubject = new Subject<Subject<boolean>>();
 
-    constructor(injector: Injector, private readonly cdr: ChangeDetectorRef) {
-        super(injector);
+    constructor() {
+        super();
 
         this.injectedData.i18nService.setTranslations(LocaleService.DE_DE, addNewRight_translations_de_DE);
         this.injectedData.i18nService.setTranslations(LocaleService.EN_US, addNewRight_translations_en_US);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivationStart, NavigationEnd, Router } from '@angular/router';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -33,6 +33,8 @@ export enum ScreenreaderPriority {
     providedIn: 'root'
 })
 export class ACMNavigationService {
+    private readonly router = inject(Router);
+
 
     private readonly navigationEndSubject = new Subject<NavigationEnd>();
     private readonly urlIdSubject = new BehaviorSubject<string>('');
@@ -59,7 +61,7 @@ export class ACMNavigationService {
     private lastId = '';
     private lastIdKey = '';
 
-    constructor(private readonly router: Router) {
+    constructor() {
 
         this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe({
             next: ne => this.navigationEndSubject.next(ne)

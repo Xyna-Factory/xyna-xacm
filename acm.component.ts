@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -34,8 +34,10 @@ import { acm_translations_en_US } from './locale/acm-translations.en-US';
     imports: [XcModule, RouterOutlet]
 })
 export class AcmComponent extends RouteComponent {
+    private readonly i18nService = inject(I18nService);
 
-    constructor(private readonly i18nService: I18nService) {
+
+    constructor() {
         super();
         this.i18nService.setTranslations(LocaleService.DE_DE, acm_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, acm_translations_en_US);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { I18nModule } from '@zeta/i18n/i18n.module';
@@ -46,6 +46,9 @@ export interface EditRightComponentData {
     imports: [XcModule, I18nModule]
 })
 export class EditRightComponent extends XcDialogComponent<void, EditRightComponentData> {
+    private readonly cdr = inject(ChangeDetectorRef);
+    private readonly settings = inject(ACMSettingsService);
+
 
     private readonly parameterValiditySubject = new Subject<Subject<boolean>>();
 
@@ -62,8 +65,8 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
 
     editMode = false;
 
-    constructor(injector: Injector, private readonly cdr: ChangeDetectorRef, private readonly settings: ACMSettingsService) {
-        super(injector);
+    constructor() {
+        super();
 
         this.injectedData.i18n.setTranslations(LocaleService.DE_DE, editRight_translations_de_DE);
         this.injectedData.i18n.setTranslations(LocaleService.EN_US, editRight_translations_en_US);

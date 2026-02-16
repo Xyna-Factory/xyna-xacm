@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Injector, OnDestroy, ViewChild, inject } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { I18nService } from '@zeta/i18n';
@@ -65,6 +65,8 @@ export interface ParameterRichlistItemData {
     imports: [XcModule, I18nModule]
 })
 export class ParameterRichlistItemComponent extends XcRichListItemComponent<void, ParameterRichlistItemData> implements OnDestroy {
+    private readonly i18n = inject(I18nService);
+
 
     @ViewChild('parameterValue', { read: XcFormInputComponent, static: false })
     set parameterValueInput(value: XcFormInputComponent) {
@@ -93,7 +95,9 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
 
     private readonly validitySubscription: Subscription;
 
-    constructor(injector: Injector, private readonly i18n: I18nService) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
         this.parameterTypeDataWrapper = new XcAutocompleteDataWrapper(

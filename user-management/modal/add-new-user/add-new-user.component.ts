@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { I18nModule } from '@zeta/i18n/i18n.module';
@@ -47,6 +47,8 @@ export interface AddNewUserComponentData {
     imports: [XcModule, I18nModule, NgClass]
 })
 export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, AddNewUserComponentData> {
+    private readonly i18n = inject(I18nService);
+
 
     @ViewChild(XcFormDirective, { static: false })
     modalForm: XcFormDirective;
@@ -70,8 +72,8 @@ export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, 
         return this.passwordsMatch ? 'passwords-match' : 'passwords-mismatch';
     }
 
-    constructor(injector: Injector, private readonly i18n: I18nService) {
-        super(injector);
+    constructor() {
+        super();
 
         this.i18n.setTranslations(LocaleService.DE_DE, addNewUser_translations_de_DE);
         this.i18n.setTranslations(LocaleService.EN_US, addNewUser_translations_en_US);

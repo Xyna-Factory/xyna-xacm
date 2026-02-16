@@ -15,8 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { ApiService, StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -33,6 +32,9 @@ import { XoRight } from './xo/xo-right.model';
     providedIn: 'root'
 })
 export class ACMApiService extends ApiService {
+    readonly i18n = inject(I18nService);
+    private readonly dialogService = inject(XcDialogService);
+
 
     defaultStartOrderOptions1 = new StartOrderOptionsBuilder()
         .withErrorMessage(true)
@@ -41,10 +43,11 @@ export class ACMApiService extends ApiService {
     private readonly currentXoLocale: XoACMLocale;
 
 
-    constructor(http: HttpClient, readonly i18n: I18nService, private readonly dialogService: XcDialogService) {
-        super(http);
+    constructor() {
+        super();
+
         this.currentXoLocale = new XoACMLocale();
-        this.currentXoLocale.language = i18n.language;
+        this.currentXoLocale.language = this.i18n.language;
     }
 
 
