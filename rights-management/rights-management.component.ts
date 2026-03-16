@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,18 +15,15 @@ import { Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
-import { I18nModule } from '@zeta/i18n/i18n.module';
-import { XcDialogService, XcRichListItem } from '@zeta/xc';
+import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
+import { XcRichListItem } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
 
-import { ACMApiService } from '../acm-api.service';
 import { extractError, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
-import { ACMSettingsService } from '../acm-settings.service';
 import { XoModifyRightRequest } from '../xo/xo-modify-right-request.model';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
 import { ParameterRichlistItemComponent, ParameterRichlistItemData } from './items/parameter-richlist-item/parameter-richlist-item.component';
@@ -40,7 +36,7 @@ import { AddNewRightComponent, AddNewRightComponentData } from './modal/add-new-
     selector: 'rights-management',
     templateUrl: './rights-management.component.html',
     styleUrls: ['./rights-management.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 

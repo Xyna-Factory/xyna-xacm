@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,22 +15,19 @@ import { Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
-import { I18nModule } from '@zeta/i18n/i18n.module';
-import { XcDialogService, XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
+import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
+import { XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
 
 import { of, throwError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, filter, map } from 'rxjs/operators';
 
-import { ACMApiService } from '../acm-api.service';
 import { extractError, getAllRights, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
-import { ACMSettingsService } from '../acm-settings.service';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
 import { XoRoleName } from '../xo/xo-role-name.model';
 import { XoRoleTableEntry, XoRoleTableEntryArray } from '../xo/xo-role-table-entry.model';
@@ -46,7 +42,7 @@ import { EditRightComponent, EditRightComponentData } from './modal/edit-right/e
     selector: 'roles-management',
     templateUrl: './roles-management.component.html',
     styleUrls: ['./roles-management.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry> {
 

@@ -19,7 +19,7 @@ import { Component, Injector, OnDestroy, ViewChild, inject } from '@angular/core
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { I18nService } from '@zeta/i18n';
-import { I18nModule } from '@zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormInputComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
 
@@ -62,7 +62,7 @@ export interface ParameterRichlistItemData {
 @Component({
     templateUrl: './parameter-richlist-item.component.html',
     styleUrls: ['./parameter-richlist-item.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nTranslateDirective]
 })
 export class ParameterRichlistItemComponent extends XcRichListItemComponent<void, ParameterRichlistItemData> implements OnDestroy {
     private readonly i18n = inject(I18nService);
@@ -136,7 +136,7 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
         }
 
         if (this.injectedData.validityListenerObservable) {
-            this.validitySubscription = this.injectedData.validityListenerObservable.subscribe({ next: subj => subj.next(this.isValid())});
+            this.validitySubscription = this.injectedData.validityListenerObservable.subscribe({ next: subj => subj.next(this.isValid()) });
         }
     }
 
