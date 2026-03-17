@@ -20,8 +20,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnDestroy } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
-import { I18nModule, LocaleService } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcModule, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
+import { XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, LocaleService } from '@zeta/i18n';
+import { XcAutocompleteDataWrapper, XcModule, XcOptionItem, XcOptionItemString, XcRichListItem, XcFormTextAreaTemplate, XcIdentityDataWrapper } from '@zeta/xc';
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
@@ -42,7 +42,7 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
     selector: 'user-management',
     templateUrl: './user-management.component.html',
     styleUrls: ['./user-management.component.scss'],
-    imports: [XcModule, I18nModule, NgStyle]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, NgStyle]
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 

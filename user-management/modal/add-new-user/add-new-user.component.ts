@@ -18,8 +18,7 @@ import { NgClass } from '@angular/common';
  */
 import { Component, inject, ViewChild } from '@angular/core';
 
-import { I18nService, LocaleService } from '@zeta/i18n';
-import { I18nModule } from '@zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcDialogComponent, XcFormDirective, XcOptionItem, XcOptionItemString, XcRichListItem } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
 
@@ -44,7 +43,7 @@ export interface AddNewUserComponentData {
 @Component({
     templateUrl: './add-new-user.component.html',
     styleUrls: ['./add-new-user.component.scss'],
-    imports: [XcModule, I18nModule, NgClass]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, NgClass]
 })
 export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, AddNewUserComponentData> {
     private readonly i18n = inject(I18nService);
