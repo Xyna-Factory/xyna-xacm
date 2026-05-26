@@ -15,13 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Subject } from 'rxjs';
 
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcDialogComponent, XcLocalTableDataSource, XcRichListItem, XcSelectionModel } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
-
-import { Subject } from 'rxjs';
 
 import { ACMSettingsService } from '../../../acm-settings.service';
 import { ParameterRichlistItemComponent, ParameterRichlistItemData } from '../../../rights-management/items/parameter-richlist-item/parameter-richlist-item.component';
