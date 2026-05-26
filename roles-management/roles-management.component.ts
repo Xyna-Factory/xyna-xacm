@@ -1,3 +1,7 @@
+import { of, throwError } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { catchError, filter, map } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,15 +20,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component } from '@angular/core';
-
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
-
-import { of, throwError } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { catchError, filter, map } from 'rxjs/operators';
 
 import { extractError, getAllRights, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
@@ -257,6 +256,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                 this.rightsLocalTableDataSource.selectionModel.select(this.selectedRight);
             }
         }
+
+        this.rightsLocalTableDataSource.refresh();
     }
 
     save() {
