@@ -27,7 +27,7 @@ import { XcDialogService, XcFormDirective, XDSIconName } from '@zeta/xc';
 import { Observable, of, Subject } from 'rxjs';
 
 import { ACMApiService } from './acm-api.service';
-import { RTC, XACM_WF } from './acm-consts';
+import { XACM_WF } from './acm-consts';
 import { ACMNavigationService } from './acm-navigation.service';
 import { AcmRemoteTableDataSource } from './acm-remote-table-source.class';
 import { ACMSettingsService } from './acm-settings.service';
@@ -35,6 +35,7 @@ import { acm_route_translations_de_DE } from './locale/acm-translations.de-DE';
 import { acm_route_translations_en_US } from './locale/acm-translations.en-US';
 import { ACMTableObject } from './xo/acm-table-object.model';
 import { XoDomainArray } from './xo/xo-domain.model';
+import { ACM_RTC } from './acm.component';
 
 
 @Component({
@@ -111,7 +112,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
         this.route = this.injector.get(ActivatedRoute);
         this.acmNavigationService = this.injector.get(ACMNavigationService);
 
-        this.tableDataSource = new AcmRemoteTableDataSource(this.apiService, this.i18nService, RTC, this.getTableWorkflow());
+        this.tableDataSource = new AcmRemoteTableDataSource(this.apiService, this.i18nService, ACM_RTC, this.getTableWorkflow());
 
         this.tableDataSource.selectionModel.selectionChange.subscribe({ next: model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null });
 
@@ -217,7 +218,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
         if (refreshCache || !this._domainsCache || now > this._lastDomainsCacheUpdate + this._cacheMaxAge) {
 
-            this.apiService.startOrder(RTC, wf, [], XoDomainArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
+            this.apiService.startOrder(ACM_RTC, wf, [], XoDomainArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
                 result => {
                     if (result && !result.errorMessage) {
                         this._domainsCache = result.output[0] as XoDomainArray;

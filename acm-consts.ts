@@ -21,9 +21,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { XoACMLocale } from './xo/xo-locale.model';
 import { XoRightArray } from './xo/xo-right.model';
-
-
-export const RTC = RuntimeContext.guiHttpApplication;
+import { ACM_RTC } from './acm.component';
 
 export const XACM_WF = {
     xmcp: {
@@ -62,7 +60,7 @@ export function getAllRights(apiService: ApiService, xoLocale: XoACMLocale): Obs
 
     const subject = new Subject<XoRightArray>();
 
-    apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.GetAllRights, xoLocale, XoRightArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+    apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.GetAllRights, xoLocale, XoRightArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
         next: (result: StartOrderResult) => {
             if (result && !result.errorMessage) {
                 subject.next(result.output[0] as XoRightArray);

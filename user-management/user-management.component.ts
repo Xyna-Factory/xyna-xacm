@@ -25,7 +25,7 @@ import { XcAutocompleteDataWrapper, XcModule, XcOptionItem, XcOptionItemString, 
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
-import { extractError, RTC, XACM_WF } from '../acm-consts';
+import { extractError, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
 import { XoCreateUserRequest } from '../xo/xo-create-user-request.model';
 import { XoRoleNameArray } from '../xo/xo-role-name.model';
@@ -36,6 +36,7 @@ import { AuthenticationChangedObject, AuthenticationRichListItemComponent, Authe
 import { user_translations_de_DE } from './locale/user-translations.de-DE';
 import { user_translations_en_US } from './locale/user-translations.en-US';
 import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-user/add-new-user.component';
+import { ACM_RTC } from '../acm.component';
 
 
 @Component({
@@ -169,7 +170,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         const question = this.i18nService.translate('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
 
         const sendRequest = () => {
-            this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+            this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
                 next: result => {
                     if (result && !result.errorMessage) {
                         this.currentObject = null;
@@ -212,7 +213,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         const subj = new Subject<XoRoleNameArray>();
         const wf = XACM_WF.xmcp.xacm.usermanagement.GetRoles;
 
-        this.apiService.startOrder(RTC, wf, [], XoRoleNameArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+        this.apiService.startOrder(ACM_RTC, wf, [], XoRoleNameArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: result => {
                 if (result) {
                     if (result.errorMessage) {

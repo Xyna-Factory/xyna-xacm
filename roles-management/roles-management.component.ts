@@ -25,7 +25,7 @@ import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirec
 import { XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
 import { XcModule } from '@zeta/xc/xc.module';
 
-import { extractError, getAllRights, RTC, XACM_WF } from '../acm-consts';
+import { extractError, getAllRights, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
 import { XoRoleName } from '../xo/xo-role-name.model';
@@ -35,6 +35,7 @@ import { roles_translations_de_DE } from './locale/roles-translations.de-DE';
 import { roles_translations_en_US } from './locale/roles-translations.en-US';
 import { AddNewRoleComponent } from './modal/add-new-role/add-new-role.component';
 import { EditRightComponent, EditRightComponentData } from './modal/edit-right/edit-right.component';
+import { ACM_RTC } from '../acm.component';
 
 
 @Component({
@@ -119,7 +120,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.dialogService.custom<XoRole, XoRole>(AddNewRoleComponent, ref).afterDismissResult().subscribe(
             (role: XoRole) => {
                 if (role) {
-                    this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.CreateRole, role, XoRole, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+                    this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.CreateRole, role, XoRole, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
                         next: (result: StartOrderResult) => {
                             if (result && !result.errorMessage) {
                                 this.refresh();
@@ -158,7 +159,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
         const sendRequest = () => {
             if (role instanceof XoRole) {
-                this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.DeleteRole, role, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+                this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.DeleteRole, role, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
                     next: result => {
                         if (result && !result.errorMessage) {
                             this.currentObject = null;
@@ -202,7 +203,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
         if (roleName.roleName) {
             return this.apiService
-                .startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.GetRoleDetails, [roleName, this.apiService.xoLocale], XoRole, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).pipe(
+                .startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.GetRoleDetails, [roleName, this.apiService.xoLocale], XoRole, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).pipe(
                     filter(result => {
                         if (result.errorMessage) {
                             // if the error is due to a missing right ...
@@ -262,7 +263,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     save() {
         const clone = this.role.clone();
-        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rolesmanagement.ModifyRole, clone, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+        this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.ModifyRole, clone, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
                     this.refresh();

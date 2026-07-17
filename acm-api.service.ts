@@ -23,12 +23,13 @@ import { XcDialogService } from '@zeta/xc';
 
 import { catchError, EMPTY, filter, Observable } from 'rxjs';
 
-import { extractError, RTC, XACM_WF } from './acm-consts';
+import { extractError, XACM_WF } from './acm-consts';
 import { XoACMLocale } from './xo/xo-locale.model';
 import { XoRight } from './xo/xo-right.model';
+import { ACM_RTC } from './acm.component';
 
 
-@Injectable({    
+@Injectable({
     providedIn: 'root'
 })
 export class ACMApiService extends ApiService {
@@ -52,7 +53,7 @@ export class ACMApiService extends ApiService {
 
 
     createRight(right: XoRight): Observable<StartOrderResult> {
-        return this.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.CreateRight, [right, this.xoLocale], null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).pipe(
+        return this.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.CreateRight, [right, this.xoLocale], null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).pipe(
             catchError(error => {
                 this.dialogService.error(extractError(error));
                 return EMPTY;
