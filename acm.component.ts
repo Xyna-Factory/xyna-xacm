@@ -20,8 +20,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
-import { XcNavListItem, XcNavListOrientation } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcNavListComponent, XcNavListItem, XcNavListOrientation } from '@zeta/xc';
 
 import { acm_translations_de_DE } from './locale/acm-translations.de-DE';
 import { acm_translations_en_US } from './locale/acm-translations.en-US';
@@ -31,7 +30,7 @@ import { acm_translations_en_US } from './locale/acm-translations.en-US';
     selector: 'acm',
     templateUrl: './acm.component.html',
     styleUrls: ['./acm.component.scss'],
-    imports: [XcModule, RouterOutlet]
+    imports: [XcNavListComponent, RouterOutlet]
 })
 export class AcmComponent extends RouteComponent {
     private readonly i18nService = inject(I18nService);

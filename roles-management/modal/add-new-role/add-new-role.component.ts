@@ -18,8 +18,7 @@
 import { Component, inject, ViewChild } from '@angular/core';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcDialogComponent, XcFormDirective } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorRequiredDirective } from '@zeta/xc';
 
 import { XoRole } from '../../../xo/xo-role.model';
 import { addNewRole_translations_de_DE } from './locale/add-new-role-translations.de-DE';
@@ -29,7 +28,7 @@ import { addNewRole_translations_en_US } from './locale/add-new-role-translation
 @Component({
     templateUrl: './add-new-role.component.html',
     styleUrls: ['./add-new-role.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorRequiredDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class AddNewRoleComponent extends XcDialogComponent<XoRole, XoRole> {
     private readonly i18nService = inject(I18nService);
