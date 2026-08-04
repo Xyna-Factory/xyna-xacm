@@ -42,7 +42,7 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
     selector: 'user-management',
     templateUrl: './user-management.component.html',
     styleUrls: ['./user-management.component.scss'],
-    imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcIconComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, NgStyle]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, NgStyle]
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 
