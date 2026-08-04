@@ -22,8 +22,7 @@ import { catchError, filter, map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcLocalTableDataSource, XDSIconName } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcLocalTableDataSource, XcMasterDetailComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XDSIconName } from '@zeta/xc';
 
 import { extractError, getAllRights, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
@@ -41,7 +40,7 @@ import { EditRightComponent, EditRightComponentData } from './modal/edit-right/e
     selector: 'roles-management',
     templateUrl: './roles-management.component.html',
     styleUrls: ['./roles-management.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
+    imports: [XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry> {
 

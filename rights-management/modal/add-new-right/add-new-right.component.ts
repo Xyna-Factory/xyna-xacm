@@ -18,8 +18,7 @@
 import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 
 import { I18nParam, I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcDialogComponent, XcFormDirective, XcRichListItem } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorCustomDirective, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
 import { Subject } from 'rxjs';
 
@@ -39,7 +38,7 @@ export interface AddNewRightComponentData {
 @Component({
     templateUrl: './add-new-right.component.html',
     styleUrls: ['./add-new-right.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorRequiredDirective, XcFormValidatorCustomDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRightComponentData> {
     private readonly cdr = inject(ChangeDetectorRef);

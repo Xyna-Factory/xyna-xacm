@@ -19,8 +19,7 @@ import { Subject } from 'rxjs';
 
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcDialogComponent, XcLocalTableDataSource, XcRichListItem, XcSelectionModel } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormTextareaComponent, XcLocalTableDataSource, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcRichListItem, XcSelectionModel, XcTableComponent } from '@zeta/xc';
 
 import { ACMSettingsService } from '../../../acm-settings.service';
 import { ParameterRichlistItemComponent, ParameterRichlistItemData } from '../../../rights-management/items/parameter-richlist-item/parameter-richlist-item.component';
@@ -41,7 +40,7 @@ export interface EditRightComponentData {
 @Component({
     templateUrl: './edit-right.component.html',
     styleUrls: ['./edit-right.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormDirective, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class EditRightComponent extends XcDialogComponent<void, EditRightComponentData> {
     private readonly cdr = inject(ChangeDetectorRef);

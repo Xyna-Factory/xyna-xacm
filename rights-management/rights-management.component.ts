@@ -19,8 +19,7 @@ import { Component } from '@angular/core';
 
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcRichListItem } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcIconComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcRichListItem, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { extractError, RTC, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
@@ -36,7 +35,7 @@ import { AddNewRightComponent, AddNewRightComponentData } from './modal/add-new-
     selector: 'rights-management',
     templateUrl: './rights-management.component.html',
     styleUrls: ['./rights-management.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
+    imports: [XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
 

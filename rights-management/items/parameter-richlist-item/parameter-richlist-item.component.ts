@@ -20,8 +20,7 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { I18nService } from '@zeta/i18n';
 import { XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcFormInputComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
-import { XcModule } from '@zeta/xc/xc.module';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
 
 import { Observable, Subject, Subscription } from 'rxjs';
 
@@ -62,7 +61,7 @@ export interface ParameterRichlistItemData {
 @Component({
     templateUrl: './parameter-richlist-item.component.html',
     styleUrls: ['./parameter-richlist-item.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcI18nTranslateDirective]
 })
 export class ParameterRichlistItemComponent extends XcRichListItemComponent<void, ParameterRichlistItemData> implements OnDestroy {
     private readonly i18n = inject(I18nService);
