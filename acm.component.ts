@@ -24,7 +24,10 @@ import { XcNavListComponent, XcNavListItem, XcNavListOrientation } from '@zeta/x
 
 import { acm_translations_de_DE } from './locale/acm-translations.de-DE';
 import { acm_translations_en_US } from './locale/acm-translations.en-US';
+import { RuntimeContext } from '@zeta/api';
+import { ConfigService } from '@zeta/api/config.service';
 
+export let ACM_RTC = RuntimeContext.guiHttpApplication;
 
 @Component({
     selector: 'acm',
@@ -38,6 +41,19 @@ export class AcmComponent extends RouteComponent {
 
     constructor() {
         super();
+        const configService = inject(ConfigService);
+        if (configService.config['modeller']?.runtimeContext) {
+            if (configService.config['modeller'].runtimeContext.application) {
+                ACM_RTC = RuntimeContext.fromApplicationVersion(
+                    configService.config['modeller'].runtimeContext.application,
+                    configService.config['modeller'].runtimeContext.version
+                );
+            } else if (configService.config['modeller'].runtimeContext.workspace) {
+                ACM_RTC = RuntimeContext.fromWorkspace(
+                    configService.config['modeller'].runtimeContext.workspace
+                );
+            }
+        }
         this.i18nService.setTranslations(LocaleService.DE_DE, acm_translations_de_DE);
         this.i18nService.setTranslations(LocaleService.EN_US, acm_translations_en_US);
 

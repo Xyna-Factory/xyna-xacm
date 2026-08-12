@@ -21,7 +21,7 @@ import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcIconComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcRichListItem, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { extractError, RTC, XACM_WF } from '../acm-consts';
+import { extractError, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
 import { XoModifyRightRequest } from '../xo/xo-modify-right-request.model';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
@@ -29,6 +29,7 @@ import { ParameterRichlistItemComponent, ParameterRichlistItemData } from './ite
 import { rights_translations_de_DE } from './locale/rights-translations.de-DE';
 import { rights_translations_en_US } from './locale/rights-translations.en-US';
 import { AddNewRightComponent, AddNewRightComponentData } from './modal/add-new-right/add-new-right.component';
+import { ACM_RTC } from '../acm.component';
 
 
 @Component({
@@ -91,7 +92,7 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         request.documentation = this.currentObject.documentation;
         request.locale = this.apiService.xoLocale;
 
-        this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.ModifyRight, request, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
+        this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.ModifyRight, request, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
                     this.refresh();
@@ -112,7 +113,7 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         const question = this.i18nService.translate('xmcp.xacm.rights.delete', { key: '%name%', value: right.rightName });
 
         const sendRequest = () => {
-            this.apiService.startOrder(RTC, XACM_WF.xmcp.xacm.rightsmanagement.DeleteRight, right, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
+            this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.DeleteRight, right, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
                 result => {
                     if (result && !result.errorMessage) {
                         this.currentObject = null;
