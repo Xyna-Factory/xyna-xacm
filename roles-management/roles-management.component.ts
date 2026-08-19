@@ -1,7 +1,3 @@
-import { of, throwError } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { catchError, filter, map } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -19,6 +15,10 @@ import { catchError, filter, map } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { of, throwError } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { catchError, filter, map } from 'rxjs/operators';
+
 import { Component } from '@angular/core';
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
@@ -26,6 +26,7 @@ import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcLo
 
 import { extractError, getAllRights, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
+import { ACM_RTC } from '../acm.component';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
 import { XoRoleName } from '../xo/xo-role-name.model';
 import { XoRoleTableEntry, XoRoleTableEntryArray } from '../xo/xo-role-table-entry.model';
@@ -34,7 +35,6 @@ import { roles_translations_de_DE } from './locale/roles-translations.de-DE';
 import { roles_translations_en_US } from './locale/roles-translations.en-US';
 import { AddNewRoleComponent } from './modal/add-new-role/add-new-role.component';
 import { EditRightComponent, EditRightComponentData } from './modal/edit-right/edit-right.component';
-import { ACM_RTC } from '../acm.component';
 
 
 @Component({
@@ -88,12 +88,12 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.rightsLocalTableDataSource.actionElements = [
             {
                 iconName: XDSIconName.EDIT,
-                tooltip: this.i18nService.translate('xmcp.xacm.roles.edit'),
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.roles.edit'),
                 onAction: row => this.editRight(row)
             },
             {
                 iconName: XDSIconName.DELETE,
-                tooltip: this.i18nService.translate('xmcp.xacm.roles.revoke'),
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.roles.revoke'),
                 onAction: row => this.revokeRight(row)
             }
         ];

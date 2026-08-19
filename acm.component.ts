@@ -17,15 +17,15 @@
  */
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
+import { RuntimeContext } from '@zeta/api';
+import { ConfigService } from '@zeta/api/config.service';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcNavListComponent, XcNavListItem, XcNavListOrientation } from '@zeta/xc';
 
 import { acm_translations_de_DE } from './locale/acm-translations.de-DE';
 import { acm_translations_en_US } from './locale/acm-translations.en-US';
-import { RuntimeContext } from '@zeta/api';
-import { ConfigService } from '@zeta/api/config.service';
+
 
 export let ACM_RTC = RuntimeContext.guiHttpApplication;
 
@@ -58,9 +58,9 @@ export class AcmComponent extends RouteComponent {
         this.i18nService.setTranslations(LocaleService.EN_US, acm_translations_en_US);
 
         this.sideListItems = [
-            { name: this.i18nService.translate('xmcp.xacm.nav.users'), link: 'users' },
-            { name: this.i18nService.translate('xmcp.xacm.nav.roles'), link: 'roles' },
-            { name: this.i18nService.translate('xmcp.xacm.nav.rights'), link: 'rights' }
+            { name: this.i18nService.translateSignal('xmcp.xacm.nav.users'), link: 'users' },
+            { name: this.i18nService.translateSignal('xmcp.xacm.nav.roles'), link: 'roles' },
+            { name: this.i18nService.translateSignal('xmcp.xacm.nav.rights'), link: 'rights' }
         ];
 
     }
