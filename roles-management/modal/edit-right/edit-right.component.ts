@@ -17,7 +17,7 @@
  */
 import { Subject } from 'rxjs';
 
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormTextareaComponent, XcLocalTableDataSource, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcRichListItem, XcSelectionModel, XcTableComponent } from '@zeta/xc';
 
@@ -74,8 +74,8 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
         this.rightsLocalTableDataSource.localTableData = {
             rows: [],
             columns: [
-                { path: 'rightName', name: 'Right' },
-                { path: 'parameterStr', name: 'Parameter Definition' } // parameterStr should be a transient property of XoRight
+                { path: 'rightName', name: signal('Right') },
+                { path: 'parameterStr', name: signal('Parameter Definition') } // parameterStr should be a transient property of XoRight
             ]
         };
 

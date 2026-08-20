@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, OnDestroy, ViewChild, inject } from '@angular/core';
+import { Component, Injector, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { I18nService } from '@zeta/i18n';
@@ -103,9 +103,9 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
             () => this.injectedData.parameter.type,
             value => this.injectedData.parameter.type = value,
             [
-                { name: 'Options', value: RightParameterType.OPTIONS },
-                { name: 'RegExp', value: RightParameterType.REGEXP },
-                { name: 'Xyna', value: RightParameterType.XYNA }
+                { name: signal('Options'), value: RightParameterType.OPTIONS },
+                { name: signal('RegExp'), value: RightParameterType.REGEXP },
+                { name: signal('Xyna'), value: RightParameterType.XYNA }
             ]
         );
 

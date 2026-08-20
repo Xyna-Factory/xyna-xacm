@@ -17,7 +17,7 @@
  */
 import { NgStyle } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, LocaleService } from '@zeta/i18n';
@@ -96,7 +96,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
 
         this.tableDataSource.output = XoUserArray;
         this.tableDataSource.filterEnums.set(XoUser.getAccessorMap().locked, of(<XcOptionItem[]>[
-            { name: '', value: '' }, { name: 'true', value: 'true' }, { name: 'false', value: 'false' }
+            { name: signal(''), value: '' }, { name: signal('true'), value: 'true' }, { name: signal('false'), value: 'false' }
         ]));
     }
 

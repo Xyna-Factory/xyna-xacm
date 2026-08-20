@@ -19,7 +19,7 @@ import { of, throwError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, filter, map } from 'rxjs/operators';
 
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcLocalTableDataSource, XcMasterDetailComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XDSIconName } from '@zeta/xc';
@@ -76,8 +76,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.rightsLocalTableDataSource.localTableData = {
             rows: [],
             columns: [
-                { path: 'rightName', name: 'Right' },
-                { path: 'parameterStr', name: 'Parameter Implementation' } // parameterStr should be a transient property of XoRight
+                { path: 'rightName', name: signal('Right') },
+                { path: 'parameterStr', name: signal('Parameter Implementation') } // parameterStr should be a transient property of XoRight
             ]
         };
 
