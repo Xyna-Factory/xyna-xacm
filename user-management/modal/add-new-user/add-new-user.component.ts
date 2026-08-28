@@ -1,3 +1,5 @@
+import { Observable, Subject, Subscription } from 'rxjs';
+
 import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,11 +19,8 @@ import { NgClass } from '@angular/common';
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, inject, viewChild } from '@angular/core';
-
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
-
-import { Observable, Subject, Subscription } from 'rxjs';
 
 import { XoCreateUserRequest } from '../../../xo/xo-create-user-request.model';
 import { XoDomainArray } from '../../../xo/xo-domain.model';

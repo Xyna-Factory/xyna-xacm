@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,11 +17,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
-
+import { Component, inject, Injector } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
 
 import { XoDomain } from '../../../xo/xo-domain.model';
 

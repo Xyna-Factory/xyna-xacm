@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,11 +18,8 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
-
 import { I18nParam, I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorCustomDirective, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
 
 import { RightParameterType, XoRightParameter, XoRightParameterArray } from '../../../xo/xo-right-parameter.model';
 import { XoRight } from '../../../xo/xo-right.model';

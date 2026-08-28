@@ -1,3 +1,5 @@
+import { Observable, Subject, Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,14 +17,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, OnDestroy, ViewChild, inject, signal } from '@angular/core';
+import { Component, inject, Injector, OnDestroy, signal, ViewChild } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-
-import { I18nService } from '@zeta/i18n';
-import { XcI18nTranslateDirective } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
-
-import { Observable, Subject, Subscription } from 'rxjs';
 
 import { RightParameterType, RightParameterValueError, XoRightParameter, XoRightParameterArray } from '../../../xo/xo-right-parameter.model';
 
