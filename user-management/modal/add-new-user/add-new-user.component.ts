@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
@@ -48,8 +48,7 @@ export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, 
     private readonly i18n = inject(I18nService);
 
 
-    @ViewChild(XcFormDirective, { static: false })
-    modalForm: XcFormDirective;
+    readonly modalForm = viewChild(XcFormDirective);
 
     user = new XoCreateUserRequest();
     roleDataWrapper: XcAutocompleteDataWrapper;
@@ -97,7 +96,8 @@ export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, 
     }
 
     isInvalid(): boolean {
-        return this.modalForm ? this.modalForm.invalid : false;
+        const modalForm = this.modalForm();
+        return modalForm ? modalForm.invalid : false;
     }
 
     cancel() {

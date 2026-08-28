@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorRequiredDirective } from '@zeta/xc';
@@ -34,11 +34,11 @@ export class AddNewRoleComponent extends XcDialogComponent<XoRole, XoRole> {
     private readonly i18nService = inject(I18nService);
 
 
-    @ViewChild(XcFormDirective, {static: false})
-    modalForm: XcFormDirective;
+    readonly modalForm = viewChild(XcFormDirective);
 
     get invalid(): boolean {
-        return this.modalForm ? this.modalForm.invalid : false;
+        const modalForm = this.modalForm();
+        return modalForm ? modalForm.invalid : false;
     }
 
     role: XoRole = new XoRole();

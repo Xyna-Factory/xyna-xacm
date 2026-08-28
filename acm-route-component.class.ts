@@ -18,7 +18,7 @@
 import { Observable, of, Subject } from 'rxjs';
 
 import { Location } from '@angular/common';
-import { Component, inject, Injector, ViewChild } from '@angular/core';
+import { Component, inject, Injector, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -52,11 +52,11 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     protected readonly settings = inject(ACMSettingsService);
     protected readonly location = inject(Location);
 
-    @ViewChild('detailsForm', { read: XcFormDirective, static: false })
-    detailsPanelForm: XcFormDirective;
+    readonly detailsPanelForm = viewChild('detailsForm', { read: XcFormDirective });
 
     get invalid(): boolean {
-        return this.detailsPanelForm ? this.detailsPanelForm.invalid : false;
+        const detailsPanelForm = this.detailsPanelForm();
+        return detailsPanelForm ? detailsPanelForm.invalid : false;
     }
 
     tableDataSource: AcmRemoteTableDataSource<T>;
