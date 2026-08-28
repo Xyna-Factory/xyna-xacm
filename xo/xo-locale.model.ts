@@ -15,13 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObject, XoObjectClass, XoProperty, XoUnique } from '@zeta/api';
-
-
 /**
  * base.locale.Locale will be needed in more projects than acm
  * and I don't want name conflict because of auto importer feature of vscode
  */
+
+import { XoArray, XoArrayClass, XoObject, XoObjectClass, XoProperty, XoUnique } from '@zeta/api';
+
+
 @XoObjectClass(null, 'base.locale', 'Locale')
 export class XoACMLocale extends XoObject {
 

@@ -1,6 +1,3 @@
-import { Observable, Subject, Subscription } from 'rxjs';
-
-import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,9 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { Observable, Subject, Subscription } from 'rxjs';
+
+import { NgClass } from '@angular/common';
 import { Component, inject, viewChild } from '@angular/core';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';

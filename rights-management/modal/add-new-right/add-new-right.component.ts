@@ -1,5 +1,3 @@
-import { Subject } from 'rxjs';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,6 +15,9 @@ import { Subject } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { Subject } from 'rxjs';
+
 import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
 import { I18nParam, I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorCustomDirective, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
