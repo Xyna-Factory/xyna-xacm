@@ -17,7 +17,7 @@
  */
 import { Observable, of, Subject } from 'rxjs';
 
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, inject, Injector, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StartOrderOptionsBuilder } from '@zeta/api';
@@ -40,9 +40,8 @@ import { XoDomainArray } from './xo/xo-domain.model';
 @Component({
     template: '',
     imports: [
-        CommonModule,
-        RouterModule,
-    ]
+    RouterModule
+]
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
 
