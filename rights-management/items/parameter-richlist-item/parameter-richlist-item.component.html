@@ -1,7 +1,6 @@
 <div class="items-row grid-12">
   <!-- TYPE DROPDOWN -->
-  <xc-form-autocomplete
-    label="label-type"
+  <xc-form-autocomplete label="label-type"
     class="col-5"
     xc-form-autocomplete-asdropdown
     [(xc-form-autocomplete-option)]="parameterTypeDataWrapper.value"
@@ -10,13 +9,12 @@
     xc-form-field-suffix="clear"
     xc-form-autocomplete-fulltextsearch
     xc-i18n
-  ></xc-form-autocomplete>
+   />
 
   <!-- VALUE grantMode -->
   @if (grantMode) {
     @if (optionsTypeSelected) {
-      <xc-form-autocomplete
-        label="label-value"
+      <xc-form-autocomplete label="label-value"
         class="col-7"
         xc-form-autocomplete-asdropdown
         [(xc-form-autocomplete-option)]="optionsDataWrapper.value"
@@ -26,39 +24,37 @@
         xc-form-autocomplete-fulltextsearch
         xc-i18n
         xc-form-validator-required
-      ></xc-form-autocomplete>
+       />
     }
     @if (!optionsTypeSelected) {
-      <xc-form-input
-        #parameterValue
+      <xc-form-input #parameterValue
         label="label-value"
         class="col-7"
         [(value)]="injectedData.parameter.value"
         [readonly]="injectedData.readonly"
         xc-i18n
         xc-form-validator-required
-      ></xc-form-input>
+       />
     }
   }
 
   <!-- DEFINITION !grantMode -->
   @if (!grantMode) {
     @if (!xynaTypeSelected) {
-      <xc-form-input
-        #parameterValue
+      <xc-form-input #parameterValue
         label="label-definition"
         class="col-7"
         [(value)]="injectedData.parameter.value"
         [readonly]="injectedData.readonly"
         xc-i18n
         xc-form-validator-required
-      ></xc-form-input>
+       />
     }
     @if (xynaTypeSelected) {
       <div class="col-7"></div>
     }
     @if (!injectedData.readonly) {
-      <xc-icon-button xc-icon-name="delete" (click)="delete()"></xc-icon-button>
+      <xc-icon-button xc-icon-name="delete" (click)="delete()" />
     }
   }
 </div>

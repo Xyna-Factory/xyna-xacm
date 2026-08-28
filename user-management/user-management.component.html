@@ -4,14 +4,13 @@
       <h1 class="items-left" xc-i18n>header-users</h1>
       <div class="items-right">
         <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
-        <xc-icon-button (click)="refresh()" xc-i18n xc-icon-name="reload" xc-tooltip="tooltip-refresh"></xc-icon-button>
-        <xc-icon-button (click)="create(null)" xc-i18n xc-icon xc-icon-name="add" xc-tooltip="tooltip-add"></xc-icon-button>
+        <xc-icon-button (click)="refresh()" xc-i18n xc-icon-name="reload" xc-tooltip="tooltip-refresh" />
+        <xc-icon-button (click)="create(null)" xc-i18n xc-icon xc-icon-name="add" xc-tooltip="tooltip-add" />
       </div>
     </header>
     <section class="stretch scroll">
       <xc-table [xc-table-datasource]="tableDataSource" xc-table-allowsort xc-table-allowfilter
-        xc-table-allowselect xc-table-lazyupdate>
-      </xc-table>
+        xc-table-allowselect xc-table-lazyupdate />
     </section>
     <footer>
     </footer>
@@ -21,15 +20,14 @@
     <xc-panel detail #detailsForm xc-form>
       <header>
         <h2 class="items-left" xc-i18n>header-user-details</h2>
-        <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel" xc-i18n></xc-icon-button>
+        <xc-icon-button class="items-right" (click)="closeDetails()" xc-icon-name="close" xc-tooltip="tooltip-cancel" xc-i18n />
       </header>
       <section class="stretch scroll">
         <div class="username-container">
           <span attr.aria-label="{{'aria-user-name' | xcI18n}}" class="user-name">{{currentObject.user}}</span>
         </div>
         <div class="items-row">
-          <xc-form-autocomplete
-            label="label-role"
+          <xc-form-autocomplete label="label-role"
             [xc-form-autocomplete-options]="roleDataWrapper.values"
             [(xc-form-autocomplete-option)]="roleDataWrapper.value"
             placeholder="placeholder-choose"
@@ -37,8 +35,8 @@
             xc-form-autocomplete-fulltextsearch
             xc-i18n
             xc-form-validator-required
-          ></xc-form-autocomplete>
-          <xc-checkbox label="label-locked" [(checked)]="currentObject.locked" xc-i18n></xc-checkbox>
+           />
+          <xc-checkbox label="label-locked" [(checked)]="currentObject.locked" xc-i18n />
         </div>
         <!-- PASSWORD SUB PANEL -->
         <xc-panel>
@@ -47,8 +45,7 @@
           </header>
           <section class="pw-form">
             <form>
-              <xc-form-input
-                #pwInput
+              <xc-form-input #pwInput
                 type="password"
                 xc-form-field-suffix="password"
                 label="header-new-password"
@@ -56,9 +53,8 @@
                 name="new-password"          
                 autocomplete="new-password"  
                 xc-i18n
-              ></xc-form-input>
-              <xc-form-input
-                #pwrInput
+               />
+              <xc-form-input #pwrInput
                 [style.display]="pwInput.value ? 'block' : 'none'"
                 type="password"
                 xc-form-field-suffix="password"
@@ -67,7 +63,7 @@
                 name="confirm-password"      
                 autocomplete="new-password"  
                 xc-i18n
-              ></xc-form-input>
+               />
             </form>
           </section>
           <footer>
@@ -82,7 +78,7 @@
           <header>
             <h3 class="items-left" xc-i18n>header-domain</h3>
           </header>
-          <xc-rich-list [xc-rich-list-items]="authenticationRichListItems"></xc-rich-list>
+          <xc-rich-list [xc-rich-list-items]="authenticationRichListItems" />
         </xc-panel>
         <!-- END AUTHENTICATION SUB PANEL -->
       </section>

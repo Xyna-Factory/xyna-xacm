@@ -18,7 +18,7 @@
               xc-table-allowfilter
               xc-table-allowselect
               xc-table-lazyupdate
-            ></xc-table>
+             />
           </section>
         </xc-panel>
         @if ({}) {
@@ -26,18 +26,17 @@
             <section class="stretch scroll">
               @if (selectedRight) {
                 <div class="items-row">
-                  <xc-form-textarea
-                    label="label-documentation"
+                  <xc-form-textarea label="label-documentation"
                     xc-i18n
                     [(value)]="selectedRight.documentation"
                     xc-form-textarea-lines="8"
                     xc-form-field-compact
                     disabled
-                  ></xc-form-textarea>
+                   />
                 </div>
               }
               @if (showParameterListInput) {
-                <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
+                <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item" />
               }
             </section>
           </xc-panel>
@@ -51,20 +50,19 @@
       <div class="edit-mode-container">
         @if (selectedRight) {
           <div class="items-row">
-            <xc-form-textarea
-              label="label-documentation"
+            <xc-form-textarea label="label-documentation"
               xc-i18n
               [(value)]="selectedRight.documentation"
               xc-form-textarea-lines="15"
               xc-form-field-compact
               disabled
-            ></xc-form-textarea>
+             />
           </div>
         }
         @if (showParameterListInput) {
           <div class="items-row">
             <xc-panel>
-              <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item"></xc-rich-list>
+              <xc-rich-list [xc-rich-list-items]="parameterRichlistItems" xc-i18n-context="parameter-richlist-item" />
             </xc-panel>
           </div>
         }
