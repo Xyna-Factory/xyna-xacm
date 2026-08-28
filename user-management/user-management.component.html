@@ -59,7 +59,7 @@
               ></xc-form-input>
               <xc-form-input
                 #pwrInput
-                [ngStyle]="{display: pwInput.value ? 'block' : 'none'}"
+                [style.display]="pwInput.value ? 'block' : 'none'"
                 type="password"
                 xc-form-field-suffix="password"
                 label="label-password-confirmation"
