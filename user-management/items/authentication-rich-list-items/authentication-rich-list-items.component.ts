@@ -43,13 +43,6 @@ export interface AuthenticationRichListItemData {
 })
 export class AuthenticationRichListItemComponent extends XcRichListItemComponent<void, AuthenticationRichListItemData> {
 
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-    }
-
-
     get name(): string {
         return this.injectedData.item.name;
     }

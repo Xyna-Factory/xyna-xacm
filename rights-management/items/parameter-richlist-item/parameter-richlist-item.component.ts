@@ -17,7 +17,7 @@
  */
 import { Observable, Subject, Subscription } from 'rxjs';
 
-import { Component, inject, Injector, OnDestroy, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, signal, ViewChild } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { I18nService, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
@@ -93,9 +93,7 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
     private readonly validitySubscription: Subscription;
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.parameterTypeDataWrapper = new XcAutocompleteDataWrapper(
             () => this.injectedData.parameter.type,
