@@ -47,13 +47,38 @@ import { EditRightComponent, EditRightComponentData } from './modal/edit-right/e
 export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry> {
 
     rightsLocalTableDataSource: XcLocalTableDataSource<XoRight>;
-    selectedRight: XoRight;
 
-    allRights: XoRightArray;
+    private readonly selectedRightState = signal<XoRight | null>(null);
+    set selectedRight(value: XoRight | null) {
+        this.selectedRightState.set(value);
+    }
+    get selectedRight(): XoRight | null {
+        return this.selectedRightState();
+    }
 
-    loading: boolean;
+    private readonly allRightsState = signal<XoRightArray | null>(null);
+    set allRights(value: XoRightArray | null) {
+        this.allRightsState.set(value);
+    }
+    get allRights(): XoRightArray | null {
+        return this.allRightsState();
+    }
 
-    role: XoRole;
+    private readonly loadingState = signal(false);
+    set loading(value: boolean) {
+        this.loadingState.set(value);
+    }
+    get loading(): boolean {
+        return this.loadingState();
+    }
+
+    private readonly roleState = signal<XoRole | null>(null);
+    set role(value: XoRole | null) {
+        this.roleState.set(value);
+    }
+    get role(): XoRole | null {
+        return this.roleState();
+    }
 
     constructor() {
         super();

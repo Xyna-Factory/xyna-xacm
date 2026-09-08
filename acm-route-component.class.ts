@@ -18,7 +18,7 @@
 import { Observable, of, Subject } from 'rxjs';
 
 import { Location } from '@angular/common';
-import { Component, inject, Injector, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, Injector, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -71,19 +71,17 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     private readonly route: ActivatedRoute;
     private readonly acmNavigationService: ACMNavigationService;
 
-    private curObj: T;
-    set currentObject(value: T) {
-        if (value) {
-            this.curObj = value;
-            this.currentObjectChangeSubject.next(value);
-            if (value.hashedUniqueKey) {
-                this.updateUrl();
-            }
+    private readonly curObjState = signal<T | null>(null);
+    set currentObject(value: T | null) {
+        this.curObjState.set(value);
+        this.currentObjectChangeSubject.next(value);
+        if (value?.hashedUniqueKey) {
+            this.updateUrl();
         }
     }
 
     get currentObject(): T {
-        return this.curObj;
+        return this.curObjState();
     }
 
     private readonly currentObjectChangeSubject = new Subject<T>();
