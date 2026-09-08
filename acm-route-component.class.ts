@@ -1,4 +1,3 @@
-import { CommonModule, Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,34 +15,33 @@ import { CommonModule, Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { Observable, of, Subject } from 'rxjs';
+
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Injector, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcFormDirective, XDSIconName } from '@zeta/xc';
-
-import { Observable, of, Subject } from 'rxjs';
 
 import { ACMApiService } from './acm-api.service';
 import { XACM_WF } from './acm-consts';
 import { ACMNavigationService } from './acm-navigation.service';
 import { AcmRemoteTableDataSource } from './acm-remote-table-source.class';
 import { ACMSettingsService } from './acm-settings.service';
+import { ACM_RTC } from './acm.component';
 import { acm_route_translations_de_DE } from './locale/acm-translations.de-DE';
 import { acm_route_translations_en_US } from './locale/acm-translations.en-US';
 import { ACMTableObject } from './xo/acm-table-object.model';
 import { XoDomainArray } from './xo/xo-domain.model';
-import { ACM_RTC } from './acm.component';
 
 
 @Component({
     changeDetection: ChangeDetectionStrategy.Eager,
     template: '',
     imports: [
-        CommonModule,
-        RouterModule,
+        RouterModule
     ]
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
