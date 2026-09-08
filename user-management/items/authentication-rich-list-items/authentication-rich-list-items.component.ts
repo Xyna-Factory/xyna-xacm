@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector, inject } from '@angular/core';
 
 import { XcCheckboxComponent, XcRichListItemComponent } from '@zeta/xc';
 
@@ -38,6 +38,7 @@ export interface AuthenticationRichListItemData {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './authentication-rich-list-items.component.html',
     styleUrls: ['./authentication-rich-list-items.component.scss'],
     imports: [XcCheckboxComponent]

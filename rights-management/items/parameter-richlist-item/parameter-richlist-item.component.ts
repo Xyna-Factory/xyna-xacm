@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, OnDestroy, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injector, OnDestroy, ViewChild, inject } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { I18nService } from '@zeta/i18n';
@@ -59,6 +59,7 @@ export interface ParameterRichlistItemData {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './parameter-richlist-item.component.html',
     styleUrls: ['./parameter-richlist-item.component.scss'],
     imports: [XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcI18nTranslateDirective]

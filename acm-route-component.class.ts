@@ -16,7 +16,7 @@ import { CommonModule, Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Injector, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
@@ -39,6 +39,7 @@ import { ACM_RTC } from './acm.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '',
     imports: [
         CommonModule,

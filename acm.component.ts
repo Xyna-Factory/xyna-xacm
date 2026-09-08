@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -30,6 +30,7 @@ import { ConfigService } from '@zeta/api/config.service';
 export let ACM_RTC = RuntimeContext.guiHttpApplication;
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'acm',
     templateUrl: './acm.component.html',
     styleUrls: ['./acm.component.scss'],

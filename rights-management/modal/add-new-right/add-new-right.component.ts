@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 
 import { I18nParam, I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorCustomDirective, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
@@ -36,6 +36,7 @@ export interface AddNewRightComponentData {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './add-new-right.component.html',
     styleUrls: ['./add-new-right.component.scss'],
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorRequiredDirective, XcFormValidatorCustomDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcI18nContextDirective, XcI18nTranslateDirective]
