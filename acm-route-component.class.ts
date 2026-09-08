@@ -18,7 +18,7 @@
 import { Observable, of, Subject } from 'rxjs';
 
 import { Location } from '@angular/common';
-import { Component, inject, Injector, viewChild } from '@angular/core';
+import { Component, inject, Injector, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -39,6 +39,7 @@ import { XoDomainArray } from './xo/xo-domain.model';
 
 @Component({
     template: '',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
     RouterModule
 ]

@@ -17,7 +17,7 @@
  */
 import { Observable, Subject, Subscription } from 'rxjs';
 
-import { Component, inject, OnDestroy, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, signal, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { I18nService, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
@@ -59,12 +59,15 @@ export interface ParameterRichlistItemData {
 @Component({
     templateUrl: './parameter-richlist-item.component.html',
     styleUrls: ['./parameter-richlist-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcI18nTranslateDirective]
 })
 export class ParameterRichlistItemComponent extends XcRichListItemComponent<void, ParameterRichlistItemData> implements OnDestroy {
     private readonly i18n = inject(I18nService);
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('parameterValue', { read: XcFormInputComponent, static: false })
     set parameterValueInput(value: XcFormInputComponent) {
         if (value) {

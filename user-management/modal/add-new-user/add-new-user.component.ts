@@ -18,7 +18,7 @@
 import { Observable, Subject, Subscription } from 'rxjs';
 
 import { NgClass } from '@angular/common';
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcOptionItem, XcOptionItemString, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
@@ -41,6 +41,7 @@ export interface AddNewUserComponentData {
 @Component({
     templateUrl: './add-new-user.component.html',
     styleUrls: ['./add-new-user.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcPanelComponent, XcRichListComponent, XcI18nContextDirective, XcI18nTranslateDirective, NgClass]
 })
 export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, AddNewUserComponentData> {

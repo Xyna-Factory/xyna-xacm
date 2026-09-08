@@ -19,7 +19,7 @@
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormTextAreaTemplate, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcIconComponent, XcIdentityDataWrapper, XcMasterDetailComponent, XcOptionItem, XcOptionItemString, XcPanelComponent, XcRichListComponent, XcRichListItem, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
@@ -42,6 +42,7 @@ import { AddNewUserComponent, AddNewUserComponentData } from './modal/add-new-us
     selector: 'user-management',
     templateUrl: './user-management.component.html',
     styleUrls: ['./user-management.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {

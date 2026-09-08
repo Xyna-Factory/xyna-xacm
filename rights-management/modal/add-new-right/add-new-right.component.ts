@@ -18,7 +18,7 @@
 
 import { Subject } from 'rxjs';
 
-import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { I18nParam, I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorCustomDirective, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcRichListItem } from '@zeta/xc';
 
@@ -38,6 +38,7 @@ export interface AddNewRightComponentData {
 @Component({
     templateUrl: './add-new-right.component.html',
     styleUrls: ['./add-new-right.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormDirective, XcFormInputComponent, XcFormTextareaComponent, XcFormValidatorRequiredDirective, XcFormValidatorCustomDirective, XcIconButtonComponent, XcPanelComponent, XcRichListComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRightComponentData> {

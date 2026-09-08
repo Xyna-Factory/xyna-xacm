@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RuntimeContext } from '@zeta/api';
 import { ConfigService } from '@zeta/api/config.service';
@@ -33,6 +33,7 @@ export let ACM_RTC = RuntimeContext.guiHttpApplication;
     selector: 'acm',
     templateUrl: './acm.component.html',
     styleUrls: ['./acm.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcNavListComponent, RouterOutlet]
 })
 export class AcmComponent extends RouteComponent {

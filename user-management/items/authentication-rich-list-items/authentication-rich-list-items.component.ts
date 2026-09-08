@@ -17,7 +17,7 @@
  */
 import { Subject } from 'rxjs';
 
-import { Component, inject, Injector } from '@angular/core';
+import { Component, inject, Injector, ChangeDetectionStrategy } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent } from '@zeta/xc';
 
 import { XoDomain } from '../../../xo/xo-domain.model';
@@ -39,6 +39,7 @@ export interface AuthenticationRichListItemData {
 @Component({
     templateUrl: './authentication-rich-list-items.component.html',
     styleUrls: ['./authentication-rich-list-items.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcCheckboxComponent]
 })
 export class AuthenticationRichListItemComponent extends XcRichListItemComponent<void, AuthenticationRichListItemData> {

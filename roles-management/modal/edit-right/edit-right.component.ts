@@ -17,7 +17,7 @@
  */
 import { Subject } from 'rxjs';
 
-import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogComponent, XcDialogWrapperComponent, XcFormDirective, XcFormTextareaComponent, XcLocalTableDataSource, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcRichListItem, XcSelectionModel, XcTableComponent } from '@zeta/xc';
 
@@ -40,6 +40,7 @@ export interface EditRightComponentData {
 @Component({
     templateUrl: './edit-right.component.html',
     styleUrls: ['./edit-right.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcDialogWrapperComponent, XcFormDirective, XcFormTextareaComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class EditRightComponent extends XcDialogComponent<void, EditRightComponentData> {
