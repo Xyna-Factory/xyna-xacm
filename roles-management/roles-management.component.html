@@ -1,4 +1,4 @@
-<xc-master-detail [xc-master-detail-opened]="!!role" xc-master-detail-side-area-size="half" xc-i18n-context="xmcp.xacm.roles">
+<xc-master-detail [xc-master-detail-opened]="!!role()" xc-master-detail-side-area-size="half" xc-i18n-context="xmcp.xacm.roles">
   <xc-panel master>
     <header>
       <h1 class="items-left" xc-i18n>header-roles
@@ -18,7 +18,7 @@
     </footer>
   </xc-panel>
 
-  @if (!!role) {
+  @if (!!role()) {
     <xc-panel detail>
       <header>
         <h2 class="items-left" xc-i18n>header-role-details</h2>
@@ -27,7 +27,7 @@
       </header>
       <section class="stretch scroll">
         <div class="rolename-container">
-          <span attr.aria-label="{{'aria-role-name' | xcI18n}}" class="role-name">{{role.roleName}}</span>
+          <span attr.aria-label="{{'aria-role-name' | xcI18n}}" class="role-name">{{role().roleName}}</span>
         </div>
         <div class="items-row">
           <xc-form-textarea xc-i18n label="label-documentation" [(value)]="role.description"></xc-form-textarea>
