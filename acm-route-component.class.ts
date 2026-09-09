@@ -18,7 +18,8 @@
 import { Observable, of, Subject } from 'rxjs';
 
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Injector, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Injector, signal, viewChild } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -71,25 +72,21 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     private readonly route: ActivatedRoute;
     private readonly acmNavigationService: ACMNavigationService;
 
-    private curObj: T;
+    private readonly currentObjectSignal = signal<T>(null);
+
     set currentObject(value: T) {
-        if (value) {
-            this.curObj = value;
-            this.currentObjectChangeSubject.next(value);
-            if (value.hashedUniqueKey) {
-                this.updateUrl();
-            }
+        this.currentObjectSignal.set(value);
+        if (value?.hashedUniqueKey) {
+            this.updateUrl();
         }
     }
 
     get currentObject(): T {
-        return this.curObj;
+        return this.currentObjectSignal();
     }
 
-    private readonly currentObjectChangeSubject = new Subject<T>();
-
-    get currentObjectChange() {
-        return this.currentObjectChangeSubject.asObservable();
+    get currentObjectChange(): Observable<T> {
+        return toObservable(this.currentObjectSignal, { injector: this.injector });
     }
 
     get isGerman() {
