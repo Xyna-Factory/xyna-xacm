@@ -75,8 +75,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.rightsLocalTableDataSource.localTableData = {
             rows: [],
             columns: [
-                { path: 'rightName', name: 'Right' },
-                { path: 'parameterStr', name: 'Parameter Implementation' } // parameterStr should be a transient property of XoRight
+                { path: 'rightName', name: signal('Right') },
+                { path: 'parameterStr', name: signal('Parameter Implementation') } // parameterStr should be a transient property of XoRight
             ]
         };
 
@@ -87,12 +87,12 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.rightsLocalTableDataSource.actionElements = [
             {
                 iconName: XDSIconName.EDIT,
-                tooltip: this.i18nService.translate('xmcp.xacm.roles.edit'),
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.roles.edit'),
                 onAction: row => this.editRight(row)
             },
             {
                 iconName: XDSIconName.DELETE,
-                tooltip: this.i18nService.translate('xmcp.xacm.roles.revoke'),
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.roles.revoke'),
                 onAction: row => this.revokeRight(row)
             }
         ];

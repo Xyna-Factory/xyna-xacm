@@ -1,4 +1,3 @@
-import { Observable, Subject, Subscription } from 'rxjs';
 
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -17,7 +16,9 @@ import { Observable, Subject, Subscription } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, ViewChild } from '@angular/core';
+import { Observable, Subject, Subscription } from 'rxjs';
+
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal, ViewChild } from '@angular/core';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { I18nService, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcOptionItem, XcOptionItemString, XcRichListItemComponent } from '@zeta/xc';
@@ -100,9 +101,9 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
             () => this.injectedData.parameter.type,
             value => this.injectedData.parameter.type = value,
             [
-                { name: 'Options', value: RightParameterType.OPTIONS },
-                { name: 'RegExp', value: RightParameterType.REGEXP },
-                { name: 'Xyna', value: RightParameterType.XYNA }
+                { name: signal('Options'), value: RightParameterType.OPTIONS },
+                { name: signal('RegExp'), value: RightParameterType.REGEXP },
+                { name: signal('Xyna'), value: RightParameterType.XYNA }
             ]
         );
 

@@ -118,14 +118,14 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
                 onAction: row => {
                     this.copy(row);
                 },
-                tooltip: this.i18nService.translate('xmcp.xacm.acm-route.copy')
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.acm-route.copy')
             },
             {
                 iconName: XDSIconName.DELETE,
                 onAction: row => {
                     this.delete(row);
                 },
-                tooltip: this.i18nService.translate('xmcp.xacm.acm-route.delete')
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.acm-route.delete')
             }
         ];
 
