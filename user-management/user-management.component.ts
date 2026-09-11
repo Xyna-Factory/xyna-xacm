@@ -167,8 +167,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         const object = new XoUsername();
         object.name = user.user;
 
-        const questionTitle = this.i18nService.translate('xmcp.xacm.user.question');
-        const question = this.i18nService.translate('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
+        const questionTitle = this.i18nService.translateInstant('xmcp.xacm.user.question');
+        const question = this.i18nService.translateInstant('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
 
         const sendRequest = () => {
             this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
@@ -205,8 +205,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     }
 
     private operationFailed() {
-        const infoTitle = this.i18nService.translate('xmcp.xacm.user.failure');
-        const info = this.i18nService.translate('xmcp.xacm.user.operation-failed');
+        const infoTitle = this.i18nService.translateInstant('xmcp.xacm.user.failure');
+        const info = this.i18nService.translateInstant('xmcp.xacm.user.operation-failed');
         this.dialogService.info(infoTitle, info);
     }
 

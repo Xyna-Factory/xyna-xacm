@@ -104,7 +104,7 @@ export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRight
     }
 
     translationHelp() {
-        const fn = (key: string, ...params: I18nParam[]) => this.injectedData.i18nService.translate(key, ...params);
+        const fn = (key: string, ...params: I18nParam[]) => this.injectedData.i18nService.translateInstant(key, ...params);
         this.translatedNameHelp = fn(this.rightNameHelp, {key: '%exp1%', value: this.rightNameExp});
         this.translatedParameterHelp = fn(this.parameterHelpText);
     }

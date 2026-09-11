@@ -39,7 +39,7 @@ function ParameterValueValidator(errorMessage: string, parameterDataGetter: () =
             allowed = para.isDefinitionValid(value);
         }
 
-        return !allowed.valid ? { 'message': { value: control.value, message: allowed.translate(i18n) } } : null;
+        return !allowed.valid ? { 'message': { value: control.value, message: allowed.translateMessage(i18n) } } : null;
     };
 }
 

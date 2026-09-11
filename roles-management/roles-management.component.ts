@@ -152,8 +152,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         role.domainName0 = tableObject.domain || this.currentObject.domain;
         role.description = tableObject.documentation || this.currentObject?.documentation;
 
-        const questionTitle = this.i18nService.translate('xmcp.xacm.roles.question');
-        const question = this.i18nService.translate('xmcp.xacm.roles.delete', { key: '%name%', value: role.roleName });
+        const questionTitle = this.i18nService.translateInstant('xmcp.xacm.roles.question');
+        const question = this.i18nService.translateInstant('xmcp.xacm.roles.delete', { key: '%name%', value: role.roleName });
 
         const sendRequest = () => {
             if (role instanceof XoRole) {
@@ -208,8 +208,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                             const missingRight = /Right\s(.*)\sis\snot\sknown\sto\sthe\sfactory/.exec(result.errorMessage)[1];
                             if (missingRight) {
                                 this.dialogService.confirm(
-                                    this.i18nService.translate('xmcp.xacm.roles.unknown-right-title'),
-                                    this.i18nService.translate('xmcp.xacm.roles.unknown-right-body', { key: '%right%', value: missingRight })
+                                    this.i18nService.translateInstant('xmcp.xacm.roles.unknown-right-title'),
+                                    this.i18nService.translateInstant('xmcp.xacm.roles.unknown-right-body', { key: '%right%', value: missingRight })
                                 ).afterDismissResult().pipe(filter(answer => answer)).subscribe(answer => {
                                     // ... create missing right
                                     const right = XoRight.withName(missingRight);
