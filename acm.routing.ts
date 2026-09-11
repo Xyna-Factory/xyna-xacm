@@ -20,11 +20,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { RedirectComponent, redirectGuardCanActivate, redirectGuardCanDeactivate } from '@zeta/nav';
 import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
-import { AcmComponent } from './acm.component';
+
 import { RIGHT_ACM } from './const';
-import { RightsManagementComponent } from './rights-management/rights-management.component';
-import { RolesManagementComponent } from './roles-management/roles-management.component';
-import { UserManagementComponent } from './user-management/user-management.component';
+
+
+
 
 
 const root = 'acm';
@@ -36,7 +36,7 @@ export const AcmRoutes: Routes = [
         pathMatch: 'full'
     }, {
         path: root,
-        component: AcmComponent,
+        loadComponent: () => import('./acm.component').then(m => m.AcmComponent),
         canActivate: [rightGuardCanActivate],
         data: { right: RIGHT_ACM, reuse: root, title: root },
         children: [
@@ -53,7 +53,7 @@ export const AcmRoutes: Routes = [
             },
             {
                 path: 'users/:uniqueKey',
-                component: UserManagementComponent,
+                loadComponent: () => import('./user-management/user-management.component').then(m => m.UserManagementComponent),
                 canDeactivate: [redirectGuardCanDeactivate],
                 data: { reuse: 'users', redirectKey: root, title: 'Users' }
             },
@@ -64,7 +64,7 @@ export const AcmRoutes: Routes = [
             },
             {
                 path: 'roles/:uniqueKey',
-                component: RolesManagementComponent,
+                loadComponent: () => import('./roles-management/roles-management.component').then(m => m.RolesManagementComponent),
                 canDeactivate: [redirectGuardCanDeactivate],
                 data: { reuse: 'roles', redirectKey: root, title: 'Roles' }
             },
@@ -75,7 +75,7 @@ export const AcmRoutes: Routes = [
             },
             {
                 path: 'rights/:uniqueKey',
-                component: RightsManagementComponent,
+                loadComponent: () => import('./rights-management/rights-management.component').then(m => m.RightsManagementComponent),
                 canDeactivate: [redirectGuardCanDeactivate],
                 data: { reuse: 'rights', redirectKey: root, title: 'Rights' }
             }

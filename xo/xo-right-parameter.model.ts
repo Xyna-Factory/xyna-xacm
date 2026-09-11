@@ -34,8 +34,8 @@ export class RightParameterValueError {
         this.valid = !errorMessage;
         this.i18nParams = i18nParams;
     }
-    translate(i18n: I18nService): string {
-        return i18n.translate(this.errorMessage, ...this.i18nParams);
+    translateMessage(i18n: I18nService): string {
+        return i18n.translateInstant(this.errorMessage, ...this.i18nParams);
     }
 }
 

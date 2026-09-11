@@ -15,9 +15,9 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { NgStyle } from '@angular/common';
+
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy , signal} from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, LocaleService } from '@zeta/i18n';
@@ -40,10 +40,11 @@ import { ACM_RTC } from '../acm.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'user-management',
     templateUrl: './user-management.component.html',
     styleUrls: ['./user-management.component.scss'],
-    imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, NgStyle]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcFormAutocompleteComponent, XcFormDirective, XcFormInputComponent, XcFormValidatorRequiredDirective, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe]
 })
 export class UserManagementComponent extends ACMRouteComponent<XoUser> implements OnDestroy {
 
@@ -96,7 +97,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
 
         this.tableDataSource.output = XoUserArray;
         this.tableDataSource.filterEnums.set(XoUser.getAccessorMap().locked, of(<XcOptionItem[]>[
-            { name: '', value: '' }, { name: 'true', value: 'true' }, { name: 'false', value: 'false' }
+            { name: signal(''), value: '' }, { name: signal('true'), value: 'true' }, { name: signal('false'), value: 'false' }
         ]));
     }
 
@@ -166,8 +167,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         const object = new XoUsername();
         object.name = user.user;
 
-        const questionTitle = this.i18nService.translate('xmcp.xacm.user.question');
-        const question = this.i18nService.translate('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
+        const questionTitle = this.i18nService.translateInstant('xmcp.xacm.user.question');
+        const question = this.i18nService.translateInstant('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
 
         const sendRequest = () => {
             this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
@@ -204,8 +205,8 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     }
 
     private operationFailed() {
-        const infoTitle = this.i18nService.translate('xmcp.xacm.user.failure');
-        const info = this.i18nService.translate('xmcp.xacm.user.operation-failed');
+        const infoTitle = this.i18nService.translateInstant('xmcp.xacm.user.failure');
+        const info = this.i18nService.translateInstant('xmcp.xacm.user.operation-failed');
         this.dialogService.info(infoTitle, info);
     }
 
