@@ -16,15 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { RouterModule, Routes } from '@angular/router';
-
 import { RedirectComponent, redirectGuardCanActivate, redirectGuardCanDeactivate } from '@zeta/nav';
 import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
-
 import { RIGHT_ACM } from './const';
-
-
-
 
 
 const root = 'acm';

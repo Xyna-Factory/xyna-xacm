@@ -67,6 +67,8 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
     private readonly i18n = inject(I18nService);
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild('parameterValue', { read: XcFormInputComponent, static: false })
     set parameterValueInput(value: XcFormInputComponent) {
         if (value) {
