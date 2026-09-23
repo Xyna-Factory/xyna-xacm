@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,11 +17,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, inject } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { XcCheckboxComponent, XcRichListItemComponent } from '@zeta/xc';
-
-import { Subject } from 'rxjs';
 
 import { XoDomain } from '../../../xo/xo-domain.model';
 
@@ -38,18 +37,12 @@ export interface AuthenticationRichListItemData {
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './authentication-rich-list-items.component.html',
     styleUrls: ['./authentication-rich-list-items.component.scss'],
     imports: [XcCheckboxComponent]
 })
 export class AuthenticationRichListItemComponent extends XcRichListItemComponent<void, AuthenticationRichListItemData> {
-
-    constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-    }
-
 
     get name(): string {
         return this.injectedData.item.name;

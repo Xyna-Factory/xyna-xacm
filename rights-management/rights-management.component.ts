@@ -15,24 +15,24 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcIconComponent, XcMasterDetailComponent, XcPanelComponent, XcRichListComponent, XcRichListItem, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { extractError, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
+import { ACM_RTC } from '../acm.component';
 import { XoModifyRightRequest } from '../xo/xo-modify-right-request.model';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
 import { ParameterRichlistItemComponent, ParameterRichlistItemData } from './items/parameter-richlist-item/parameter-richlist-item.component';
 import { rights_translations_de_DE } from './locale/rights-translations.de-DE';
 import { rights_translations_en_US } from './locale/rights-translations.en-US';
 import { AddNewRightComponent, AddNewRightComponentData } from './modal/add-new-right/add-new-right.component';
-import { ACM_RTC } from '../acm.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'rights-management',
     templateUrl: './rights-management.component.html',
     styleUrls: ['./rights-management.component.scss'],
@@ -109,8 +109,8 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
     delete(tableObject?: XoRight) {
         const right = tableObject || this.currentObject;
 
-        const questionTitle = this.i18nService.translate('xmcp.xacm.rights.question');
-        const question = this.i18nService.translate('xmcp.xacm.rights.delete', { key: '%name%', value: right.rightName });
+        const questionTitle = this.i18nService.translateInstant('xmcp.xacm.rights.question');
+        const question = this.i18nService.translateInstant('xmcp.xacm.rights.delete', { key: '%name%', value: right.rightName });
 
         const sendRequest = () => {
             this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.DeleteRight, right, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(

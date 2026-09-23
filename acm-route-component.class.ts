@@ -1,4 +1,3 @@
-import { CommonModule, Location } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,33 +15,34 @@ import { CommonModule, Location } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
 
+import { Location } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, Injector, signal, viewChild } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcFormDirective, XDSIconName } from '@zeta/xc';
-
-import { Observable, of, Subject } from 'rxjs';
 
 import { ACMApiService } from './acm-api.service';
 import { XACM_WF } from './acm-consts';
 import { ACMNavigationService } from './acm-navigation.service';
 import { AcmRemoteTableDataSource } from './acm-remote-table-source.class';
 import { ACMSettingsService } from './acm-settings.service';
+import { ACM_RTC } from './acm.component';
 import { acm_route_translations_de_DE } from './locale/acm-translations.de-DE';
 import { acm_route_translations_en_US } from './locale/acm-translations.en-US';
 import { ACMTableObject } from './xo/acm-table-object.model';
 import { XoDomainArray } from './xo/xo-domain.model';
-import { ACM_RTC } from './acm.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '',
     imports: [
-        CommonModule,
-        RouterModule,
+        RouterModule
     ]
 })
 export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteComponent {
@@ -54,11 +54,11 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     protected readonly settings = inject(ACMSettingsService);
     protected readonly location = inject(Location);
 
-    @ViewChild('detailsForm', { read: XcFormDirective, static: false })
-    detailsPanelForm: XcFormDirective;
+    readonly detailsPanelForm = viewChild('detailsForm', { read: XcFormDirective });
 
     get invalid(): boolean {
-        return this.detailsPanelForm ? this.detailsPanelForm.invalid : false;
+        const detailsPanelForm = this.detailsPanelForm();
+        return detailsPanelForm ? detailsPanelForm.invalid : false;
     }
 
     tableDataSource: AcmRemoteTableDataSource<T>;
@@ -72,25 +72,21 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     private readonly route: ActivatedRoute;
     private readonly acmNavigationService: ACMNavigationService;
 
-    private curObj: T;
+    private readonly currentObjectSignal = signal<T>(null);
+
     set currentObject(value: T) {
-        if (value) {
-            this.curObj = value;
-            this.currentObjectChangeSubject.next(value);
-            if (value.hashedUniqueKey) {
-                this.updateUrl();
-            }
+        this.currentObjectSignal.set(value);
+        if (value?.hashedUniqueKey) {
+            this.updateUrl();
         }
     }
 
     get currentObject(): T {
-        return this.curObj;
+        return this.currentObjectSignal();
     }
 
-    private readonly currentObjectChangeSubject = new Subject<T>();
-
-    get currentObjectChange() {
-        return this.currentObjectChangeSubject.asObservable();
+    get currentObjectChange(): Observable<T> {
+        return toObservable(this.currentObjectSignal, { injector: this.injector });
     }
 
     get isGerman() {
@@ -122,14 +118,14 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
                 onAction: row => {
                     this.copy(row);
                 },
-                tooltip: this.i18nService.translate('xmcp.xacm.acm-route.copy')
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.acm-route.copy')
             },
             {
                 iconName: XDSIconName.DELETE,
                 onAction: row => {
                     this.delete(row);
                 },
-                tooltip: this.i18nService.translate('xmcp.xacm.acm-route.delete')
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.acm-route.delete')
             }
         ];
 

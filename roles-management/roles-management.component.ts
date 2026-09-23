@@ -1,6 +1,4 @@
-import { of, throwError } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { catchError, filter, map } from 'rxjs/operators';
+import { catchError, filter, map, Observable, of, throwError } from 'rxjs';
 
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -19,13 +17,14 @@ import { catchError, filter, map } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcFormTextareaComponent, XcIconButtonComponent, XcLocalTableDataSource, XcMasterDetailComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XDSIconName } from '@zeta/xc';
 
 import { extractError, getAllRights, XACM_WF } from '../acm-consts';
 import { ACMRouteComponent } from '../acm-route-component.class';
+import { ACM_RTC } from '../acm.component';
 import { XoRight, XoRightArray } from '../xo/xo-right.model';
 import { XoRoleName } from '../xo/xo-role-name.model';
 import { XoRoleTableEntry, XoRoleTableEntryArray } from '../xo/xo-role-table-entry.model';
@@ -34,10 +33,10 @@ import { roles_translations_de_DE } from './locale/roles-translations.de-DE';
 import { roles_translations_en_US } from './locale/roles-translations.en-US';
 import { AddNewRoleComponent } from './modal/add-new-role/add-new-role.component';
 import { EditRightComponent, EditRightComponentData } from './modal/edit-right/edit-right.component';
-import { ACM_RTC } from '../acm.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'roles-management',
     templateUrl: './roles-management.component.html',
     styleUrls: ['./roles-management.component.scss'],
@@ -52,7 +51,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     loading: boolean;
 
-    role: XoRole;
+    readonly role = signal<XoRole>(null);
 
     constructor() {
         super();
@@ -63,7 +62,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                 this.getDetailsAboutTableEntry(roleTableEntry).subscribe({
                     next: (role: XoRole) => {
                         if (role) {
-                            this.role = role;
+                            this.role.set(role);
                             this.syncRightsTable();
                         }
                     },
@@ -76,8 +75,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.rightsLocalTableDataSource.localTableData = {
             rows: [],
             columns: [
-                { path: 'rightName', name: 'Right' },
-                { path: 'parameterStr', name: 'Parameter Implementation' } // parameterStr should be a transient property of XoRight
+                { path: 'rightName', name: signal('Right') },
+                { path: 'parameterStr', name: signal('Parameter Implementation') } // parameterStr should be a transient property of XoRight
             ]
         };
 
@@ -88,12 +87,12 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.rightsLocalTableDataSource.actionElements = [
             {
                 iconName: XDSIconName.EDIT,
-                tooltip: this.i18nService.translate('xmcp.xacm.roles.edit'),
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.roles.edit'),
                 onAction: row => this.editRight(row)
             },
             {
                 iconName: XDSIconName.DELETE,
-                tooltip: this.i18nService.translate('xmcp.xacm.roles.revoke'),
+                tooltip: this.i18nService.translateSignal('xmcp.xacm.roles.revoke'),
                 onAction: row => this.revokeRight(row)
             }
         ];
@@ -153,8 +152,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         role.domainName0 = tableObject.domain || this.currentObject.domain;
         role.description = tableObject.documentation || this.currentObject?.documentation;
 
-        const questionTitle = this.i18nService.translate('xmcp.xacm.roles.question');
-        const question = this.i18nService.translate('xmcp.xacm.roles.delete', { key: '%name%', value: role.roleName });
+        const questionTitle = this.i18nService.translateInstant('xmcp.xacm.roles.question');
+        const question = this.i18nService.translateInstant('xmcp.xacm.roles.delete', { key: '%name%', value: role.roleName });
 
         const sendRequest = () => {
             if (role instanceof XoRole) {
@@ -162,7 +161,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                     next: result => {
                         if (result && !result.errorMessage) {
                             this.currentObject = null;
-                            this.role = null;
+                            this.role.set(null);
                             this.refresh();
                         } else {
                             this.dialogService.error(result.errorMessage);
@@ -209,8 +208,8 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                             const missingRight = /Right\s(.*)\sis\snot\sknown\sto\sthe\sfactory/.exec(result.errorMessage)[1];
                             if (missingRight) {
                                 this.dialogService.confirm(
-                                    this.i18nService.translate('xmcp.xacm.roles.unknown-right-title'),
-                                    this.i18nService.translate('xmcp.xacm.roles.unknown-right-body', { key: '%right%', value: missingRight })
+                                    this.i18nService.translateInstant('xmcp.xacm.roles.unknown-right-title'),
+                                    this.i18nService.translateInstant('xmcp.xacm.roles.unknown-right-body', { key: '%right%', value: missingRight })
                                 ).afterDismissResult().pipe(filter(answer => answer)).subscribe(answer => {
                                     // ... create missing right
                                     const right = XoRight.withName(missingRight);
@@ -245,9 +244,9 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         this.selectedRight = currentTemp;
 
         // fills the local table
-        if (this.role) {
+        if (this.role()) {
             let right: XoRight;
-            for (right of this.role.rightList.data) {
+            for (right of this.role().rightList.data) {
                 right.afterDecode();
                 this.rightsLocalTableDataSource.add(right);
             }
@@ -261,7 +260,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
     }
 
     save() {
-        const clone = this.role.clone();
+        const clone = this.role().clone();
         this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.ModifyRole, clone, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
@@ -280,7 +279,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
             allRights: this.allRights,
             right: refRight ? refRight.clone() : null,
             i18n: this.i18nService,
-            selectedRole: this.role
+            selectedRole: this.role()
         };
 
         this.dialogService.custom<void, EditRightComponentData>(EditRightComponent, data)
@@ -289,10 +288,10 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     revokeRight(refRight?: XoRight) {
         const right = refRight || this.selectedRight;
-        const i = this.role.rightList.data.indexOf(right);
+        const i = this.role().rightList.data.indexOf(right);
 
         if (i >= 0) {
-            this.role.rightList.data.splice(i, 1);
+            this.role().rightList.data.splice(i, 1);
             this.selectedRight = right === this.selectedRight ? null : this.selectedRight;
             this.syncRightsTable();
         }
@@ -303,9 +302,9 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
         const selection = this.rightsLocalTableDataSource.selectionModel.selection;
 
         selection.forEach(right => {
-            const i = this.role.rightList.data.indexOf(right);
+            const i = this.role().rightList.data.indexOf(right);
             if (i >= 0) {
-                this.role.rightList.data.splice(i, 1);
+                this.role().rightList.data.splice(i, 1);
             }
         });
 
@@ -315,6 +314,6 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     closeDetails() {
         super.closeDetails();
-        this.role = null;
+        this.role.set(null);
     }
 }
