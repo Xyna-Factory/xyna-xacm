@@ -66,12 +66,14 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     private readonly _cacheMaxAge = 1000 * 30; // 30s
 
     private _lastDomainsCacheUpdate = 0;
+    // @ts-expect-error(TODO:)
     private _domainsCache: XoDomainArray;
 
     private readonly router: Router;
     private readonly route: ActivatedRoute;
     private readonly acmNavigationService: ACMNavigationService;
 
+    // @ts-expect-error(TODO:)
     private readonly currentObjectSignal = signal<T>(null);
 
     set currentObject(value: T) {
@@ -110,6 +112,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
 
         this.tableDataSource = new AcmRemoteTableDataSource(this.apiService, this.i18nService, ACM_RTC, this.getTableWorkflow());
 
+        // @ts-expect-error(TODO:)
         this.tableDataSource.selectionModel.selectionChange.subscribe({ next: model => this.currentObject = model.selection[0] ? model.selection[0].clone() : null });
 
         this.tableDataSource.actionElements = [
@@ -194,6 +197,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
     }
 
     closeDetails() {
+        // @ts-expect-error(TODO:)
         this.currentObject = null;
         this.tableDataSource.selectionModel.clear();
     }
@@ -217,6 +221,7 @@ export abstract class ACMRouteComponent<T extends ACMTableObject> extends RouteC
             this.apiService.startOrder(ACM_RTC, wf, [], XoDomainArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
                 result => {
                     if (result && !result.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         this._domainsCache = result.output[0] as XoDomainArray;
                         this._lastDomainsCacheUpdate = now;
                         subj.next(this._domainsCache);

@@ -17,7 +17,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy , signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal} from '@angular/core';
 
 import { StartOrderOptionsBuilder } from '@zeta/api';
 import { XcI18nContextDirective, XcI18nTranslateDirective, XcI18nPipe, LocaleService } from '@zeta/i18n';
@@ -56,6 +56,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
     roleDataWrapper: XcAutocompleteDataWrapper;
     authenticationRichListItems: XcRichListItem[] = [];
     usedChangeSubject = new Subject<AuthenticationChangedObject>();
+    // @ts-expect-error(TODO:)
     subscriptionOfUsedChangeSubject: Subscription;
 
     constructor() {
@@ -63,6 +64,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
 
         this.roleDataWrapper = new XcAutocompleteDataWrapper(
             () => this.currentObject ? this.currentObject.role : null,
+            // @ts-expect-error(TODO:)
             value => this.currentObject.role = value
         );
 
@@ -106,7 +108,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         return !this.pw || this.pw === this.pwr;
     }
 
-    create(refUser: XoUser) {
+    create(refUser?: XoUser) {
         const data: AddNewUserComponentData = {
             roles: this.getRolesObservable(),
             domains: this.getDomainsObservable(),
@@ -171,12 +173,15 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
         const question = this.i18nService.translateInstant('xmcp.xacm.user.delete', { key: '%name%', value: user.user });
 
         const sendRequest = () => {
+            // @ts-expect-error(TODO:)
             this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.usermanagement.DeleteUser, object, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
                 next: result => {
                     if (result && !result.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         this.currentObject = null;
                         this.refresh();
                     } else {
+                        // @ts-expect-error(TODO:)
                         this.dialogService.error(result.errorMessage);
                     }
                 },
@@ -220,6 +225,7 @@ export class UserManagementComponent extends ACMRouteComponent<XoUser> implement
                     if (result.errorMessage) {
                         subj.error(result.errorMessage);
                     } else {
+                        // @ts-expect-error(TODO:)
                         subj.next(result.output[0] as XoRoleNameArray);
                     }
                 }

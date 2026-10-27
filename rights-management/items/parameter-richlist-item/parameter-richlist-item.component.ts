@@ -79,6 +79,7 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
     }
 
     get grantMode(): boolean {
+        // @ts-expect-error(TODO:)
         return this.injectedData.grantMode;
     }
 
@@ -92,8 +93,10 @@ export class ParameterRichlistItemComponent extends XcRichListItemComponent<void
 
     parameterTypeDataWrapper: XcAutocompleteDataWrapper;
 
+    // @ts-expect-error(TODO:)
     optionsDataWrapper: XcAutocompleteDataWrapper;
 
+    // @ts-expect-error(TODO:)
     private readonly validitySubscription: Subscription;
 
     constructor() {
