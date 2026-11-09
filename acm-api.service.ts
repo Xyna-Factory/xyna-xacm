@@ -53,6 +53,7 @@ export class ACMApiService extends ApiService {
 
 
     createRight(right: XoRight): Observable<StartOrderResult> {
+        // @ts-expect-error(TODO:)
         return this.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.CreateRight, [right, this.xoLocale], null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).pipe(
             catchError(error => {
                 this.dialogService.error(extractError(error));

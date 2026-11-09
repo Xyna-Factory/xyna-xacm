@@ -53,6 +53,7 @@ export class AddNewUserComponent extends XcDialogComponent<XoCreateUserRequest, 
 
     user = new XoCreateUserRequest();
     roleDataWrapper: XcAutocompleteDataWrapper;
+    // @ts-expect-error(TODO:)
     authenticationRichListItems: XcRichListItem[];
 
     usedChangeSubject = new Subject<AuthenticationChangedObject>();

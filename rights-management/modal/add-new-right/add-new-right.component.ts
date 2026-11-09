@@ -65,7 +65,9 @@ export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRight
     // important that the string has no indent
     parameterHelpText = 'xmcp.xacm.rights.add-new-right.parameter-help-text';
 
+    // @ts-expect-error(TODO:)
     translatedNameHelp: string;
+    // @ts-expect-error(TODO:)
     translatedParameterHelp: string;
 
     showNameHelp = false;
@@ -84,6 +86,7 @@ export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRight
         if (this.injectedData.refRight) {
             this.right.rightName = this.injectedData.refRight.rightName;
             this.right.documentation = this.injectedData.refRight.documentation;
+            // @ts-expect-error(TODO:)
             this.right.parameterList = this.injectedData.refRight.parameterList ? this.injectedData.refRight.parameterList.clone() : undefined;
         }
 
@@ -171,6 +174,7 @@ export class AddNewRightComponent extends XcDialogComponent<XoRight, AddNewRight
             });
 
             if (this.right.parameterList.data.length === 0) {
+                // @ts-expect-error(TODO:)
                 this.right.parameterList = undefined;
             }
         }

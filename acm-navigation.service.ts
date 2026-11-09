@@ -29,7 +29,7 @@ export enum ScreenreaderPriority {
 }
 
 
-@Injectable({    
+@Injectable({
     providedIn: 'root'
 })
 export class ACMNavigationService {
@@ -69,9 +69,12 @@ export class ACMNavigationService {
 
         this.router.events.subscribe(e => {
             if (e instanceof ActivationStart) {
+                // @ts-expect-error(TODO:)
                 const path = e.snapshot.routeConfig.path;
+                // @ts-expect-error(TODO:)
                 const idIndicationIndex = path.indexOf(':');
                 if (idIndicationIndex >= 0) {
+                    // @ts-expect-error(TODO:)
                     this.lastIdKey = path.substring(idIndicationIndex + 1);
                     const id = e.snapshot.params[this.urlIdKey];
                     this.lastId = id;

@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -32,10 +34,12 @@ export class ACMTableObject extends XoObject {
 
         for (i = 0; i < str.length; i++) {
             char = str.charCodeAt(i);
-             
+
+            // eslint-disable-next-line no-bitwise
             hash = ((hash << 5) - hash) + char;
+            // eslint-disable-next-line no-bitwise
             hash |= 0;
-             
+
         }
         return 'huk' + Math.abs(hash);
     }

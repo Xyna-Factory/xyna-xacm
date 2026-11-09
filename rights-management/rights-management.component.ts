@@ -92,12 +92,14 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         request.documentation = this.currentObject.documentation;
         request.locale = this.apiService.xoLocale;
 
+        // @ts-expect-error(TODO:)
         this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.ModifyRight, request, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
                     this.refresh();
                     this.closeDetails();
                 } else {
+                    // @ts-expect-error(TODO:)
                     this.dialogService.error(result.errorMessage);
                 }
             },
@@ -113,12 +115,15 @@ export class RightsManagementComponent extends ACMRouteComponent<XoRight> {
         const question = this.i18nService.translateInstant('xmcp.xacm.rights.delete', { key: '%name%', value: right.rightName });
 
         const sendRequest = () => {
+            // @ts-expect-error(TODO:)
             this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.DeleteRight, right, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(
                 result => {
                     if (result && !result.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         this.currentObject = null;
                         this.refresh();
                     } else {
+                        // @ts-expect-error(TODO:)
                         this.dialogService.error(result.errorMessage);
                     }
                 },

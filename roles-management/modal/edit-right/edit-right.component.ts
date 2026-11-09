@@ -51,6 +51,7 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
     private readonly parameterValiditySubject = new Subject<Subject<boolean>>();
 
     rightsLocalTableDataSource: XcLocalTableDataSource<XoRight>;
+    // @ts-expect-error(TODO:)
     selectedRight: XoRight;
 
     dynamicParameterListValidatorFn = DynamicParameterListValidator.parameterListCorrect;
@@ -96,6 +97,7 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
                 if (right) {
                     this.selectedRight = right.clone();
                 } else {
+                    // @ts-expect-error(TODO:)
                     this.selectedRight = null;
                 }
                 this.syncParameterRichlistItems();
@@ -160,6 +162,7 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
         return !filterValid;
     }
 
+    // @ts-expect-error(TODO:)
     private addRightToRole(right?: XoRight): boolean {
         right = right || this.selectedRight;
         if (right) {
@@ -197,6 +200,7 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
 
             if ((!right.hasParameter) && this.rightsLocalTableDataSource) {
                 this.rightsLocalTableDataSource.remove(this.selectedRight);
+                // @ts-expect-error(TODO:)
                 this.selectedRight = null;
                 this.rightsLocalTableDataSource.selectionModel.clear();
             }
@@ -207,6 +211,6 @@ export class EditRightComponent extends XcDialogComponent<void, EditRightCompone
 
     apply() {
         this.addRightToRole();
-        this.dismiss(null);
+        this.dismiss();
     }
 }

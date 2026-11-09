@@ -43,15 +43,15 @@ export class AcmComponent extends RouteComponent {
     constructor() {
         super();
         const configService = inject(ConfigService);
-        if (configService.config['modeller']?.runtimeContext) {
-            if (configService.config['modeller'].runtimeContext.application) {
+        if (configService.config.modeller?.runtimeContext) {
+            if (configService.config.modeller.runtimeContext.application) {
                 ACM_RTC = RuntimeContext.fromApplicationVersion(
-                    configService.config['modeller'].runtimeContext.application,
-                    configService.config['modeller'].runtimeContext.version
+                    configService.config.modeller.runtimeContext.application,
+                    configService.config.modeller.runtimeContext.version
                 );
-            } else if (configService.config['modeller'].runtimeContext.workspace) {
+            } else if (configService.config.modeller.runtimeContext.workspace) {
                 ACM_RTC = RuntimeContext.fromWorkspace(
-                    configService.config['modeller'].runtimeContext.workspace
+                    configService.config.modeller.runtimeContext.workspace
                 );
             }
         }

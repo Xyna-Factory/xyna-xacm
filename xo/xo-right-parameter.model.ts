@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -133,7 +135,6 @@ export class XoRightParameter extends XoObject {
         }
 
         if (this.type === RightParameterType.REGEXP) {
-            let okay = true;
             const index = def.indexOf('/');
             const lastIndex = def.lastIndexOf('/');
             if (index === lastIndex) {
@@ -142,12 +143,12 @@ export class XoRightParameter extends XoObject {
             // const flags = def.substring(lastIndex + 1); // I believe the factory does not allow flags in regex
             def = def.substring(index + 1, lastIndex);
             try {
-                 
+                // eslint-disable-next-line no-new
                 new RegExp(def);
+                return new RightParameterValueError('');
             } catch {
-                okay = false;
+                return new RightParameterValueError('NOT A VALID REGEXP');
             }
-            return new RightParameterValueError(okay ? '' : 'NOT A VALID REGEXP');
         }
 
         if (this.type === RightParameterType.XYNA) {

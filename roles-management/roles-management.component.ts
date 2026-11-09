@@ -45,12 +45,16 @@ import { EditRightComponent, EditRightComponentData } from './modal/edit-right/e
 export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry> {
 
     rightsLocalTableDataSource: XcLocalTableDataSource<XoRight>;
+    // @ts-expect-error(TODO:)
     selectedRight: XoRight;
 
+    // @ts-expect-error(TODO:)
     allRights: XoRightArray;
 
+    // @ts-expect-error(TODO:)
     loading: boolean;
 
+    // @ts-expect-error(TODO:)
     readonly role = signal<XoRole>(null);
 
     constructor() {
@@ -123,6 +127,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                             if (result && !result.errorMessage) {
                                 this.refresh();
                             } else {
+                                // @ts-expect-error(TODO:)
                                 this.dialogService.error(result.errorMessage);
                             }
                         },
@@ -148,8 +153,11 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     delete(tableObject?: XoRoleTableEntry) {
         const role: XoRole = new XoRole();
+        // @ts-expect-error(TODO:)
         role.roleName = tableObject.role || this.currentObject.role;
+        // @ts-expect-error(TODO:)
         role.domainName0 = tableObject.domain || this.currentObject.domain;
+        // @ts-expect-error(TODO:)
         role.description = tableObject.documentation || this.currentObject?.documentation;
 
         const questionTitle = this.i18nService.translateInstant('xmcp.xacm.roles.question');
@@ -157,13 +165,17 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
         const sendRequest = () => {
             if (role instanceof XoRole) {
+                // @ts-expect-error(TODO:)
                 this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.DeleteRole, role, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
                     next: result => {
                         if (result && !result.errorMessage) {
+                            // @ts-expect-error(TODO:)
                             this.currentObject = null;
+                            // @ts-expect-error(TODO:)
                             this.role.set(null);
                             this.refresh();
                         } else {
+                            // @ts-expect-error(TODO:)
                             this.dialogService.error(result.errorMessage);
                         }
                     },
@@ -188,6 +200,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
             next: (rights: XoRightArray) => {
                 if (rights) {
                     this.allRights = rights;
+                    // @ts-expect-error(TODO:)
                     this.editRight(null);
                 }
             },
@@ -205,6 +218,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                     filter(result => {
                         if (result.errorMessage) {
                             // if the error is due to a missing right ...
+                            // @ts-expect-error(TODO:)
                             const missingRight = /Right\s(.*)\sis\snot\sknown\sto\sthe\sfactory/.exec(result.errorMessage)[1];
                             if (missingRight) {
                                 this.dialogService.confirm(
@@ -217,6 +231,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                                 });
                             } else {
                                 // ... else show general error
+                                // @ts-expect-error(TODO:)
                                 this.dialogService.error(result.errorMessage, null, result.stackTrace.join('\r\n'));
                             }
                             return false;
@@ -224,6 +239,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                         return true;
                     }),
                     filter(result => result && !result.errorMessage),
+                    // @ts-expect-error(TODO:)
                     map(result => result.output[0] as XoRole),
                     catchError(error => {
                         this.dialogService.error(extractError(error));
@@ -232,6 +248,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
                 );
         }
 
+        // @ts-expect-error(TODO:)
         return of(null);
     }
 
@@ -261,12 +278,14 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     save() {
         const clone = this.role().clone();
+        // @ts-expect-error(TODO:)
         this.apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rolesmanagement.ModifyRole, clone, null, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
             next: (result: StartOrderResult) => {
                 if (result && !result.errorMessage) {
                     this.refresh();
                     this.closeDetails();
                 } else {
+                    // @ts-expect-error(TODO:)
                     this.dialogService.error(result.errorMessage);
                 }
             },
@@ -277,6 +296,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
     editRight(refRight: XoRight) {
         const data: EditRightComponentData = {
             allRights: this.allRights,
+            // @ts-expect-error(TODO:)
             right: refRight ? refRight.clone() : null,
             i18n: this.i18nService,
             selectedRole: this.role()
@@ -292,6 +312,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
         if (i >= 0) {
             this.role().rightList.data.splice(i, 1);
+            // @ts-expect-error(TODO:)
             this.selectedRight = right === this.selectedRight ? null : this.selectedRight;
             this.syncRightsTable();
         }
@@ -314,6 +335,7 @@ export class RolesManagementComponent extends ACMRouteComponent<XoRoleTableEntry
 
     closeDetails() {
         super.closeDetails();
+        // @ts-expect-error(TODO:)
         this.role.set(null);
     }
 }

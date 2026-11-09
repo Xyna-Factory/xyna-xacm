@@ -63,6 +63,7 @@ export function getAllRights(apiService: ApiService, xoLocale: XoACMLocale): Obs
     apiService.startOrder(ACM_RTC, XACM_WF.xmcp.xacm.rightsmanagement.GetAllRights, xoLocale, XoRightArray, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe({
         next: (result: StartOrderResult) => {
             if (result && !result.errorMessage) {
+                // @ts-expect-error(TODO:)
                 subject.next(result.output[0] as XoRightArray);
             } else {
                 subject.error(result.errorMessage);
