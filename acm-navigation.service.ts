@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable, inject } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { ActivationStart, NavigationEnd, Router } from '@angular/router';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -29,9 +29,7 @@ export enum ScreenreaderPriority {
 }
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class ACMNavigationService {
     private readonly router = inject(Router);
 
