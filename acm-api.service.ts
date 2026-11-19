@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
 import { ApiService, StartOrderOptionsBuilder, StartOrderResult } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -29,9 +29,7 @@ import { XoRight } from './xo/xo-right.model';
 import { ACM_RTC } from './acm.component';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class ACMApiService extends ApiService {
     readonly i18n = inject(I18nService);
     private readonly dialogService = inject(XcDialogService);
